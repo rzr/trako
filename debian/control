@@ -1,0 +1,26 @@
+Source: trako
+Priority: extra
+Maintainer: Philippe Coval <rzr@gna.org>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.2
+Section: libs
+Homepage: https://gitorious.org/trako/
+Vcs-Git: ssh://git@gitorious.org:trako/trako.git
+Vcs-Browser: https://gitorious.org/trako/trako
+
+Package: trako-dev
+Section: libdevel
+Architecture: any
+Depends: trako1 (= ${binary:Version})
+Description: C++ tracking library that count instances funct calls etc
+ Trako aims to help profiling a C++ project in real time
+ without changing much of the architecture and related code to be studied...
+
+
+Package: trako1
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: C++ tracking library that count instances funct calls etc
+ Trako aims to help profiling a C++ project in real time
+ without changing much of the architecture and related code to be studied...
