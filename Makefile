@@ -64,7 +64,7 @@ cmake:src/CMakeLists.txt distclean
 	make -C ${<D} V=1 VERBOSE=1
 
 
-COPYING:/usr/share/common-licenses/LGPL-2
+COPYING:/usr/share/common-licenses/LGPL-3
 	cp $< $@
 
 
