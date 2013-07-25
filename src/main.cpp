@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
 
   cout<<endl<<"# Multithreading"<<endl;
   {
-    MetaMutex lock;
+    MetaMutex<std::ostream> lock;
     TRAKO_SCOPE("mutex: this line wont be split"); //<! @INFO
   }
 

@@ -11,7 +11,7 @@
 # include <pthread.h>
 #endif
 
-
+template<typename T=void>
 class MetaMutex
 {
 public: 
@@ -22,6 +22,8 @@ private:
   static pthread_mutex_t mMutex;
 #endif
 };
+
+# include "MetaMutex.hpp"
 
 
 #endif //_h_
