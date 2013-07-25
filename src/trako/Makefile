@@ -2,5 +2,5 @@
 
 default: test
 
-%: ..
+%: ../..
 	make -C $< $@

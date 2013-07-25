@@ -21,6 +21,7 @@
 //# define CONFIG_SUPPORT_API_CXX_CSTDIO_NO 1
 # define CONFIG_SUPPORT_API_CXXABI_NO 1
 # define CONFIG_SUPPORT_API_SYS_TIME_NO 1
+# define CONFIG_SUPPORT_API_PTHREAD_NO 1
 #endif
 
 //#} platform settings:

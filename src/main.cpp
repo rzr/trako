@@ -19,14 +19,14 @@ class MyClass;
 /// sample class nothing special here, beside then lines marked @INFO
 class MyClass
 {
-public: void method()
-  {
+public:
+  void method() {
     TRAKO_FUNCT(); //<! @INFO: here a metaobject is injected in the function
     methodSub();
   }
-  
-private: void methodSub()
-  {
+
+private:
+  void methodSub() {
     TRAKO_FUNCT(); //<! @INFO: here a metaobject is injected in the function
   }
 
@@ -36,12 +36,13 @@ private: void methodSub()
 
 class MyOtherClass
 {
-public: void methodLong()
+public:
+  void methodLong()
   {
     TRAKO_FUNCT(); //<! @INFO: here a metaobject is injected in the function
     for(int i=0;i<0xFFFF;i++){ 0xFFFFF / 42.;}
   }
-  
+
   TRAKO_CLASS(MyOtherClass);
 };
 
@@ -52,26 +53,25 @@ int main(int argc, char* argv[])
   TRAKO_FUNCT(); //<! @INFO:
   int status=0;
 
- 
   cout<<endl<<"# Profiling classes instances"<<endl;
   MyClass sta;
   TRAKO_DIFF(); //<! @INFO:
 
   {
-    { 
+    {
       MyClass local;
       TRAKO_DIFF(); //<! @INFO:
-      
+
       MyClass* ptr = new MyClass;
       TRAKO_DIFF(); //<! @INFO:
-      
+
       delete( ptr );
       TRAKO_DIFF(); //<! @INFO:
     }
-    
+
     //TRAKO_TYPE( MyClass ); //<! @INFO:
-  }    
-  
+  }
+
   cout<<endl<<"# Profiling methods"<<endl;
 
   TRAKO_COUNT(); //<! @INFO
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
     local.method();
     local.method();
   }
-  
+
   TRAKO_DIFF(); //<! @INFO:
 
   MyOtherClass local;
@@ -98,10 +98,18 @@ int main(int argc, char* argv[])
   cout<<endl<<"# Profiling scopes"<<endl;
   for (int x=0;x<2;x++){
     TRAKO_SCOPE("row");
-  for (int y=0;y<2;y++){
-    TRAKO_SCOPE("col");
+    for (int y=0;y<2;y++){
+      TRAKO_SCOPE("col");
+    }
   }
+
+  cout<<endl<<"# Multithreading"<<endl;
+  {
+    MetaMutex lock;
+    TRAKO_SCOPE("mutex: this line wont be split"); //<! @INFO
   }
+
+
   cout<<endl<<"# Quitting"<<endl;
 
   return status;

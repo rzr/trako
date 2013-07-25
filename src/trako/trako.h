@@ -10,6 +10,7 @@ class MetaClassInterface;
 
 #include "MetaClass.h"
 #include "MetaScope.h"
+#include "MetaMutex.h"
 #include "Context.h"
 #include "macros.h"
 
