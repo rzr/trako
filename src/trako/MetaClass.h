@@ -29,7 +29,7 @@ class MetaClassInterface
 
 /// Meta Information to be injected into user's class
 /// be used to track how many instance of classes are living at a given time
-template<typename T>
+template<typename T = void>
 class MetaClass : public MetaClassInterface
   {
   public: 
