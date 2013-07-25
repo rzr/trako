@@ -1,5 +1,5 @@
 trako.h:0: info: trako-0.0.0program is beeing profiled
-src/main.cpp:53: scope: { main @0 [=0s 11us]
+src/main.cpp:53: scope: { main @0 [=0s 15us]
 
 # Profiling classes instances
 src/main.cpp:58: trace: <MyClass> +1=1 = 8B (<1<1 )
@@ -9,16 +9,16 @@ src/main.cpp:69: trace: <MyClass> -1=2 = 16B (<3<3 )
 
 # Profiling methods
 src/main.cpp:77: trace: <MyClass> -1=1 = 8B (<3<3 )
-src/main.cpp:24: scope: { method @1 [=0s 79us]
-src/main.cpp:30: scope: { methodSub @2 [=0s 79us]
+src/main.cpp:24: scope: { method @1 [=0s 102us]
+src/main.cpp:30: scope: { methodSub @2 [=0s 103us]
 src/main.cpp:30: scope: } methodSub @2 [+0s 1us]
-src/main.cpp:24: scope: } method @1 [+0s 2us]
-src/main.cpp:24: scope: { method @1 [=0s 81us]
-src/main.cpp:30: scope: { methodSub @2 [=0s 82us]
-src/main.cpp:30: scope: } methodSub @2 [+0s 0us]
-src/main.cpp:24: scope: } method @1 [+0s 2us]
-src/main.cpp:42: scope: { methodLong @1 [=0s 84us]
-src/main.cpp:42: scope: } methodLong @1 [+0s 162us]
+src/main.cpp:24: scope: } method @1 [+0s 3us]
+src/main.cpp:24: scope: { method @1 [=0s 106us]
+src/main.cpp:30: scope: { methodSub @2 [=0s 107us]
+src/main.cpp:30: scope: } methodSub @2 [+0s 1us]
+src/main.cpp:24: scope: } method @1 [+0s 3us]
+src/main.cpp:42: scope: { methodLong @1 [=0s 112us]
+src/main.cpp:42: scope: } methodLong @1 [+0s 160us]
 src/main.cpp:89: type: <void*> 0=0 = 0B (<0<0 )
 
 # Profiling program
@@ -26,25 +26,25 @@ src/main.cpp:96: trace: <MyClass> 0=1 = 8B (<3<4 )
 src/main.cpp:96: trace: <MyOtherClass> +1=1 = 8B (<2<2 )
 
 # Profiling scopes
-src/main.cpp:100: scope: { row @1 [=0s 259us]
-src/main.cpp:102: scope: { col @2 [=0s 259us]
+src/main.cpp:100: scope: { row @1 [=0s 291us]
+src/main.cpp:102: scope: { col @2 [=0s 292us]
 src/main.cpp:102: scope: } col @2 [+0s 1us]
-src/main.cpp:102: scope: { col @2 [=0s 260us]
+src/main.cpp:102: scope: { col @2 [=0s 293us]
 src/main.cpp:102: scope: } col @2 [+0s 1us]
-src/main.cpp:100: scope: } row @1 [+0s 2us]
-src/main.cpp:100: scope: { row @1 [=0s 262us]
-src/main.cpp:102: scope: { col @2 [=0s 262us]
+src/main.cpp:100: scope: } row @1 [+0s 4us]
+src/main.cpp:100: scope: { row @1 [=0s 296us]
+src/main.cpp:102: scope: { col @2 [=0s 297us]
 src/main.cpp:102: scope: } col @2 [+0s 1us]
-src/main.cpp:102: scope: { col @2 [=0s 263us]
+src/main.cpp:102: scope: { col @2 [=0s 299us]
 src/main.cpp:102: scope: } col @2 [+0s 1us]
-src/main.cpp:100: scope: } row @1 [+0s 2us]
+src/main.cpp:100: scope: } row @1 [+0s 5us]
 
 # Multithreading
-src/main.cpp:109: scope: { mutex: this line wont be split @1 [=0s 266us]
+src/main.cpp:109: scope: { mutex: this line wont be split @1 [=0s 305us]
 src/main.cpp:109: scope: } mutex: this line wont be split @1 [+0s 1us]
 
 # Quitting
-src/main.cpp:53: scope: } main @0 [+0s 258us]
+src/main.cpp:53: scope: } main @0 [+0s 295us]
 trako.h:0: info: {
 src/trako/Context.cpp:35: quit: <MyClass> -1=0 = 0B (<3<4 )
 src/trako/Context.cpp:35: quit: <MyOtherClass> -1=0 = 0B (<2<2 )
