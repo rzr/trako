@@ -1,6 +1,6 @@
 Source: trako
 Priority: extra
-Maintainer: Philippe Coval <rzr@gna.org>
+Maintainer: Philippe Coval <rzr@users.sf.net>
 Build-Depends: debhelper (>= 8.0.0)
 Standards-Version: 3.9.2
 Section: libs

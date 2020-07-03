@@ -1,5 +1,5 @@
 Package: trako
-Author: Philippe Coval <rzr@gna.org>
+Author: Philippe Coval <rzr@users.sf.net>
 URL: http://rzr.online.fr/
 Description: C++ tracking library that count instances funct calls etc
 
