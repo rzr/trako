@@ -3,7 +3,7 @@ Upstream-Name: trako
 Source: <https://gitorious.org/trako/>
 
 Files: *
-Copyright: 2012 Philippe Coval <rzr@gna.org>
+Copyright: 2012 Philippe Coval <rzr@users.sf.net>
 License: LGPL-3+
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU Lesser General Public License as published by
@@ -22,7 +22,7 @@ License: LGPL-3+
  Public License version 3 can be found in "/usr/share/common-licenses/LGPL-3".
 
 Files: debian/*
-Copyright: 2012 Philippe Coval <rzr@gna.org>
+Copyright: 2012 Philippe Coval <rzr@users.sf.net>
 License: LGPL-3+
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU Lesser General Public License as published by
