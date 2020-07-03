@@ -1,0 +1,27 @@
+# .dockerignore
+.git/
+
+# .gitignore
+
+MANIFEST
+*.o
+*.obj
+*.lib
+*.dll
+*.exe
+*~
+*.a
+src/main
+CMakeCache.txt
+CMakeFiles/
+CMakeLists.txt
+*.dir/
+*.vcproj*
+*/CMakeCache.txt
+*/CMakeFiles/
+*/Debug/
+*.ncb
+*.sln
+*.suo
+cmake_install.cmake
+src/Makefile
