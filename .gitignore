@@ -1,3 +1,5 @@
+# .gitignore
+
 MANIFEST
 *.o
 *.obj
