@@ -15,6 +15,7 @@ CXXFLAGS+=-DCONFIG_WANT_LIBTRAKO=1
 install_header_dir?=${DESTDIR}/usr/include/${package}
 install_lib_dir?=${DESTDIR}/usr/lib/
 
+sudo?=$(shell which sudo 2> /dev/null || echo)
 
 all: COPYING ${target}
 
@@ -67,6 +68,14 @@ cmake:src/CMakeLists.txt distclean
 COPYING:/usr/share/common-licenses/LGPL-3
 	cp $< $@
 
+/etc/debian_version:
+	test -e $@ || echo "TODO: port to other OS"
+	cat $@
+
+rule/debian/setup: /etc/debian_version
+	cat $<
+	${sudo} apt-get update
+	${sudo}	apt-get install -y make
 
 -include ~/bin/mk-local.mk
 
