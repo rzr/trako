@@ -27,16 +27,16 @@ class MyClass
 {
 public:
   void method() {
-    TRAKO_FUNCT(); //<! @INFO: here a metaobject is injected in the function
+    TRAKO_1(FUNCT); //<! @INFO: here a metaobject is injected in the function
     methodSub();
   }
 
 private:
   void methodSub() {
-    TRAKO_FUNCT(); //<! @INFO: here a metaobject is injected in the function
+    TRAKO_1(FUNCT); //<! @INFO: here a metaobject is injected in the function
   }
 
-  TRAKO_CLASS(MyClass); //<! @INFO: here a metaobject is injected in the class
+  TRAKO_2(CLASS,MyClass); //<! @INFO: here a metaobject is injected in the class
 };
 
 
@@ -45,69 +45,69 @@ class MyOtherClass
 public:
   void methodLong()
   {
-    TRAKO_FUNCT(); //<! @INFO: here a metaobject is injected in the function
+    TRAKO_1(FUNCT); //<! @INFO: here a metaobject is injected in the function
     for(int i=0;i<0xFFFF;i++){ 0xFFFFF / 42.;}
   }
 
-  TRAKO_CLASS(MyOtherClass);
+  TRAKO_2(CLASS,MyOtherClass);
 };
 
 
 /// sample unit test programm
 int main(int argc, char* argv[])
 {
-  TRAKO_FUNCT(); //<! @INFO:
+  TRAKO_1(FUNCT); //<! @INFO:
   int status=0;
 
   cout<<endl<<"# Profiling classes instances"<<endl;
   MyClass sta;
-  TRAKO_DIFF(); //<! @INFO:
+  TRAKO_1(DIFF); //<! @INFO:
 
   {
     {
       MyClass local;
-      TRAKO_DIFF(); //<! @INFO:
+      TRAKO_1(DIFF); //<! @INFO:
 
       MyClass* ptr = new MyClass;
-      TRAKO_DIFF(); //<! @INFO:
+      TRAKO_1(DIFF); //<! @INFO:
 
       delete( ptr );
-      TRAKO_DIFF(); //<! @INFO:
+      TRAKO_1(DIFF); //<! @INFO:
     }
 
-    TRAKO_TYPE( MyClass ); //<! @INFO:
+    TRAKO_2(TYPE, MyClass ); //<! @INFO:
   }
 
   cout<<endl<<"# Profiling methods"<<endl;
 
-  TRAKO_COUNT(); //<! @INFO
+  TRAKO_1(COUNT); //<! @INFO
 
   {
     MyClass local;
     local.method();
     local.method();
   }
-  TRAKO_CONTEXT(printDurationStats); //<! @INFO
-  TRAKO_DIFF(); //<! @INFO:
+  TRAKO_2(CONTEXT, printDurationStats); //<! @INFO
+  TRAKO_1(DIFF); //<! @INFO:
 
   MyOtherClass local;
   local.methodLong();
   local.methodLong();
-  TRAKO_TYPE_OF( local ); //<! @INFO:
+  TRAKO_2(TYPE_OF, local); //<! @INFO:
 
   cout<<endl<<"# Profiling program"<<endl;
   {
     MyOtherClass local;
-    TRAKO_DIFF(); //<! @INFO:
+    TRAKO_1(DIFF); //<! @INFO:
   }
 
-  TRAKO_COUNT(); //<! @INFO:
+  TRAKO_1(COUNT); //<! @INFO:
 
   cout<<endl<<"# Profiling scopes"<<endl;
   for (int x=0;x<2;x++){
-    TRAKO_SCOPE("row");
+    TRAKO_2(SCOPE, "row");
     for (int y=0;y<2;y++){
-      TRAKO_SCOPE("col");
+      TRAKO_2(SCOPE, "col");
     }
   }
   for(int i=0;i<0xFF; i++)
@@ -116,14 +116,14 @@ int main(int argc, char* argv[])
   cout<<endl<<"# Multithreading"<<endl;
   {
     trako::MetaMutex<std::ostream> lock;
-    TRAKO_SCOPE("mutex: this line wont be split"); //<! @INFO
+    TRAKO_2(SCOPE,"mutex: this line wont be split"); //<! @INFO
   }
 
   cout<<endl<<"# Reports"<<endl;
-  TRAKO_CONTEXT(printDurationStats); //<! @INFO
+  TRAKO_2(CONTEXT, printDurationStats); //<! @INFO
 
   cout<<endl<<"# Quitting"<<endl;
-  TRAKO_COUNT(); //<! @INFO:
+  TRAKO_1(COUNT); //<! @INFO:
 
   return status;
 }

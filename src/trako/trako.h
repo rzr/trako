@@ -10,8 +10,9 @@ namespace trako {};
 
 #ifndef CONFIG_WANT_LIBTRAKO
 #  warning "trako: not enabled maybe it can be removed :TODO:"
+#  define TRAKO(CMD)
 #  define TRAKO_CLASS(type)
-#  define TRAKO_FUNCT()
+#  define TRAKO_FUNCT() //!<deprecated used TRAKO(CMD)
 #  define TRAKO_SCOPE(name)
 #  define TRAKO_DIFF()
 #  define TRAKO_COUNT()
