@@ -13,7 +13,7 @@ lib?=lib${package}.a
 main_src?=src/main.cpp
 main_exe?=${main_src:.cpp=}
 target?=${main_exe}
-CXXFLAGS+=-Isrc/${package} 
+CXXFLAGS+=-Isrc/${package}  -Isrc
 CXXFLAGS+=-DCONFIG_WANT_LIBTRAKO=1
 
 install_header_dir?=${DESTDIR}/usr/include/${package}
