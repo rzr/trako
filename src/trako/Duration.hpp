@@ -177,10 +177,22 @@ void Duration<T>::printStats(char const * const prefix)
       << "% <#stats> [+~" << probe / 1000000L
       << "s~=+" <<probe << "ms=" << mElapsed << "]"<<endl;
   prevDuration = mElapsed;
-  for_each(mCollection.begin(), mCollection.end(),
-           [prefix](std::pair<char const * const, Duration> &item) {
-             item.second.print(prefix);
-           });
+  typedef std::function<bool(std::pair<char const * const, Duration<T>>,
+                             std::pair<char const * const, Duration<T>>)> Comparator;
+
+  Comparator compFunctor
+    = [](std::pair<char const * const, Duration<T>> before,
+         std::pair<char const * const, Duration<T>> after) {
+        before.second.mRatio = (float) before.second.mCumulated / mElapsed;
+        after.second.mRatio = (float) after.second.mCumulated / mElapsed;
+        return (before.second.mRatio < after.second.mRatio);
+      };
+
+  std::set<std::pair<char const * const, Duration<T>>, Comparator> sortedCollectionSet
+  (mCollection.begin(), mCollection.end(), compFunctor);
+  for (std::pair<char const * const, Duration<T>> item : sortedCollectionSet) {
+    item.second.print(prefix);
+  }
 }
 
 #endif // _h_
