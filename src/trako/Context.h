@@ -25,6 +25,8 @@ class Context
     print(prefix, false);
   }
 
+  static void printDurationStats(char const * const prefix=0);
+
  protected:
 
   ///@param force : all class type else only changed

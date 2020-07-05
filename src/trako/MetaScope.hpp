@@ -12,6 +12,8 @@
 
 #include <cassert>
 #include "MetaScope.h"
+#include "Duration.h"
+#include "macros.h"
 
 template <typename T>
 CounterOf< trako::MetaScope<T> > trako::MetaScope<T>::mCounter;
@@ -21,15 +23,22 @@ template <typename T>
 trako::MetaScope<T>::MetaScope
 ( char const * const name,
   char const * const prefix,
-  bool verbose
+  bool verbose, bool profile
   )
   : mName(name), mPrefix(prefix),
-    mVerbose(verbose)
+    mVerbose(verbose),
+    mProfile(profile)
 {
   if (mVerbose) {
-    printf("%s{ %s @%d\n", mPrefix, mName, mCounter.getValue());
+    printf("%s{ %s @%d", mPrefix, mName, mCounter.getValue());
   }  
   mCounter.add();
+  if (mProfile) {
+    Duration<void>::get(mName).start(mVerbose);
+  }
+  if (mVerbose) {
+    printf("\n");
+  }  
 }
 
 template<typename T>
@@ -37,8 +46,16 @@ trako::MetaScope<T>::~MetaScope()
 {
   mCounter.sub();
   if ( mVerbose ) {
-    printf("%s} %s @%d\n", mPrefix, mName, mCounter.getValue());
+    printf("%s} %s @%d", mPrefix, mName, mCounter.getValue());
   }
+    
+  if (mProfile) {
+    Duration<void>::get(mName).stop(mVerbose);
+  }
+  if (mVerbose) {
+    printf("\n");
+  }
+
 }
 
 template<typename T>

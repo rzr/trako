@@ -87,16 +87,18 @@ int main(int argc, char* argv[])
     local.method();
     local.method();
   }
-
+  TRAKO_CONTEXT(printDurationStats); //<! @INFO
   TRAKO_DIFF(); //<! @INFO:
 
   MyOtherClass local;
+  local.methodLong();
   local.methodLong();
   TRAKO_TYPE_OF( local ); //<! @INFO:
 
   cout<<endl<<"# Profiling program"<<endl;
   {
     MyOtherClass local;
+    TRAKO_DIFF(); //<! @INFO:
   }
 
   TRAKO_COUNT(); //<! @INFO:
@@ -108,6 +110,8 @@ int main(int argc, char* argv[])
       TRAKO_SCOPE("col");
     }
   }
+  for(int i=0;i<0xFF; i++)
+    local.methodLong();
 
   cout<<endl<<"# Multithreading"<<endl;
   {
@@ -115,8 +119,11 @@ int main(int argc, char* argv[])
     TRAKO_SCOPE("mutex: this line wont be split"); //<! @INFO
   }
 
+  cout<<endl<<"# Reports"<<endl;
+  TRAKO_CONTEXT(printDurationStats); //<! @INFO
 
   cout<<endl<<"# Quitting"<<endl;
+  TRAKO_COUNT(); //<! @INFO:
 
   return status;
 }
