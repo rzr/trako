@@ -99,4 +99,20 @@ rule/debian/setup: /etc/debian_version
 
 -include ~/bin/mk-local.mk
 
+rule/src/test: src
+	grep -r "config.h" . \
+  | grep -v 'config.h:' \
+  | grep -v 'lib.h' \
+  | grep -v '.cpp:' | grep '.h:' | grep 'include' \
+  && exit 1 || echo "OK"
+
+test: distclean rule/src/test
+	make
+	make run
+	make distclean
+	make CONFIG_TRAKO_WANT_INLINE=1
+	make CONFIG_TRAKO_WANT_INLINE=1 run
+	make distclean
+	-git status
+
 #eof
