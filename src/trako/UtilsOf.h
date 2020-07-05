@@ -111,7 +111,7 @@ class CounterOf
   }
 
   /// @param force : set to false if only printing if there are changes
-  static int print(bool force=true, char const * const prefix=TRAKO_TAG("trace: "))
+  static int print(char const * const prefix=TRAKO_TAG("trace: "), bool force=true)
   {
     int vcur = 0, vmax = 0, vevr =0, vdif=0;
     static int item = sizeof(T);

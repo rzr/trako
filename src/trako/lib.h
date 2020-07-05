@@ -37,7 +37,7 @@ namespace trako {
 
 /// trace all stats of all tracked class
 #  define TRAKO_COUNT()			\
-  trako::Context::printAll(TRAKO_TAG("trace: "))
+  trako::Context::printStats(TRAKO_TAG("trace: "))
 
 /// trace changed stats of all tracked class since previous trace
 #  define TRAKO_DIFF()			\
@@ -45,7 +45,7 @@ namespace trako {
 
 /// trace stats of the tracked class from tracked typename
 #  define TRAKO_TYPE( type )			\
-  CounterOf<type>::print(true, TRAKO_TAG("type: "))
+  CounterOf<type>::print(TRAKO_TAG("type: "), true)
 
 /// trace stats of the tracked class from tracked object
 #if 0

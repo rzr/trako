@@ -5,7 +5,10 @@
 #ifndef MetaClass_hpp_
 #define MetaClass_hpp_
 
+#include <list>
+
 #include "MetaClass.h"
+#include "Context.h"
 
 template<typename T>
 char const * trako::MetaClass<T>::mName = 0;
@@ -33,9 +36,17 @@ trako::MetaClass<T>::MetaClass()
 
 
 template<typename T>
-int trako::MetaClass<T>::print(bool force, char const * const prefix) const
+int trako::MetaClass<T>::print(char const * const prefix, bool force) const
 {
-  int res = CounterOf<T>::print( force, prefix);
+  int res = mCounter.print(prefix, force);
+  return res;
+}
+
+
+template<typename T>
+int trako::MetaClass<T>::printStats(char const * const prefix, bool force)
+{
+  int res = mCounter.print(prefix, force);
   return res;
 }
 

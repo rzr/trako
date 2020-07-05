@@ -16,7 +16,7 @@ class Context
  public:
 
   ///@param prefix : used to put context in verbose output
-  static void printAll(char const * const prefix=0) {
+  static void printStats(char const * const prefix=0) {
     print(prefix, true);
   }
 
