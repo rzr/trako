@@ -16,6 +16,7 @@
 #include "Context.h"
 
 using namespace std;
+using namespace trako;
 
 
 class MyClass;

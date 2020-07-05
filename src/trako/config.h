@@ -10,6 +10,7 @@
 // but it's safe to include it on 1st line of implementation files
 // if you want to reuse it then just #include <trako/config.h>
 
+namespace trako {};
 #define TRAKO_PACKAGE "trako"
 #define TRAKO_VERSION "0.1.0"
 

@@ -11,6 +11,8 @@
 # include <pthread.h>
 #endif
 
+namespace trako {
+
 template<typename T=void>
 class MetaMutex
 {
@@ -21,6 +23,7 @@ private:
 #ifndef CONFIG_SUPPORT_API_PTHREAD_NO
   static pthread_mutex_t mMutex;
 #endif
+};
 };
 
 # include "MetaMutex.hpp"

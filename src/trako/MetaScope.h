@@ -11,7 +11,7 @@
 #ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
 # include <sys/time.h>
 #endif
-
+namespace trako {
 /// meta object related to a scope, counting calls and produce traces
 class MetaScope
 {
@@ -52,6 +52,7 @@ protected:
   static timeval init();
 #endif
 
+};
 };
 
 #endif
