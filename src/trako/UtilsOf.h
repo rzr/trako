@@ -40,32 +40,32 @@ class UtilsOf
 
 
 /// Generic named counter
-template <typename T>
+template <typename T = void, typename N = int>
 class CounterOf
 {
  public:
   /// @return current value
-  static int getValue(bool update=true)
+  N getValue(bool update=true)
   {
     if ( update ) { mPrev = mCurrent; }
     return mCurrent;
   }
 
   /// @return difference since previous getValue()
-  static int getDiff() { return ( mCurrent - mPrev ); }
+  N getDiff() const { return ( mCurrent - mPrev ); } 
 
   /// @return maximum value since begining
-  static int getMax() { return mMax; }
+  N getMax() const { return mMax; } 
 
   /// @return minmum value since begining
-  static int getMin() { return mMin; }
+  N getMin() const { return mMin; }
 
   /// @return count the total of added items
-  static int getEver() { return mEver; }
+  N getEver() const { return mEver; }
 
   /// increase the counter by num items
   /// @return total items
-  static int add(int const num=1)
+  N add(N const num=1)
   {
     mEver+=num;
     mCurrent+=num;
@@ -75,7 +75,7 @@ class CounterOf
 
   /// decrease the counter by num items
   /// @return total items
-  static int sub(int const items=1)
+  N sub(N const items=1)
   {
     mCurrent-=items;
     if ( mCurrent < mMin ) mMin = mCurrent;
@@ -83,37 +83,37 @@ class CounterOf
   }
 
   /// reset the counter to total of num items
-  static int reset(int const num=0)
+  N reset(N const num=0)
   {
-    int res = mEver = mCurrent = mMax = mMin = num;
+    N res = mEver = mCurrent = mMax = mMin = num;
     return res;
   }
 
-  static int isChanged()
+  N isChanged() const
   {
     return ( 0 != getDiff() );
   }
 
   /// @return absolute difference since previous querry if increaded else 0
-  static int isAdd()
+  N isAdd()
   {
-    int res = ( mCurrent - mPrev );
+    N res = ( mCurrent - mPrev );
     res = ( res <= 0 ) ? 0 :  res ;
     return res;
   }
 
   /// @return absolute difference since previous query if decreased else 0
-  static int isSub()
+  N isSub()
   {
-    int res = ( mCurrent - mPrev) ;
+    N res = ( mCurrent - mPrev) ;
     res = ( res >= 0 ) ? 0 :  - res ;
     return res;
   }
 
   /// @param force : set to false if only printing if there are changes
-  static int print(char const * const prefix=TRAKO_TAG("trace: "), bool force=true)
+   N print(char const * const prefix=TRAKO_TAG("trace: "), bool force=true) //const
   {
-    int vcur = 0, vmax = 0, vevr =0, vdif=0;
+    N vcur = 0,vmax = 0, vevr =0, vdif=0;
     static int item = sizeof(T);
     
     if ( force || isChanged() != 0) {
@@ -125,7 +125,7 @@ class CounterOf
       std::cout
 	<< prefix
 	<< "<"<<UtilsOf<T>::nametype()<<">"
-	<< (( vdif > 0 ) ? " +" : " " ) <<vdif
+	<< (( vdif >= 0 ) ? " +" : " " ) <<vdif
 	<< "=" << vcur
 	<< " = " << vcur * item << "B"
 	<< " (<" << vmax << "<" << vevr <<" )"
@@ -137,19 +137,19 @@ class CounterOf
  protected:
 
   /// current value
-  static int mCurrent;
+  N mCurrent;
 
   /// maximum value at at given time
-  static int mMax;
+  N mMax;
 
   /// minunum value at at given time
-  static int mMin;
+  N mMin;
 
   /// value at previous querry
-  static int mPrev;
+  N mPrev;
 
   /// count since begining
-  static int mEver;
+  N mEver;
 };
 
 #include "UtilsOf.hpp"

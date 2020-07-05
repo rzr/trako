@@ -45,7 +45,7 @@ namespace trako {
 
 /// trace stats of the tracked class from tracked typename
 #  define TRAKO_TYPE( type )			\
-  CounterOf<type>::print(TRAKO_TAG("type: "), true)
+  trako::MetaClass<type>::printStats(TRAKO_TAG("type: "), true)
 
 /// trace stats of the tracked class from tracked object
 #if 0
