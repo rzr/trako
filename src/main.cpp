@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
       TRAKO_DIFF(); //<! @INFO:
     }
 
-    //TRAKO_TYPE( MyClass ); //<! @INFO:
+    TRAKO_TYPE( MyClass ); //<! @INFO:
   }
 
   cout<<endl<<"# Profiling methods"<<endl;
