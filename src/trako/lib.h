@@ -29,10 +29,6 @@ namespace trako {
 #  define TRAKO_2(CMD,a)                         \
   TRAKO(CMD)(a)
 
-#  define TRAKO_3(CMD,a,b)                       \
-  TRAKO(CMD)(a,b)
-
-
 /// macro to inject a trako's meta object into the user's class
 #  define TRAKO_CLASS(type)					\
   private: trako::MetaClass<type> mMeta ## type ## _	/*<! TrakO */	\
