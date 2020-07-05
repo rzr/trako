@@ -1,8 +1,11 @@
-/* #ident "$Id:$"
+/* -*- mode: C++; c-basic-offset: 2; indent-tabs-mode: nil -*-
+ * #ident "$Id:$"
  * @author: Philippe Coval <rzr@users.sf.net> -- Rev: $Author: rzr $
  * Copyright: LGPL-2 (See README file that comes with this distribution)
- *                                                           -*- Mode: c++ -*-
  *****************************************************************************/
+#ifndef MetaMutex_hpp_
+#define MetaMutex_hpp_
+
 #include "config.h"
 #include "MetaMutex.h"
 
@@ -23,5 +26,6 @@ MetaMutex<T>::~MetaMutex()
 {
   pthread_mutex_unlock(&mMutex);
 }
+#endif
 
 #endif
