@@ -20,8 +20,15 @@ sudo?=$(shell which sudo 2> /dev/null || echo)
 all: COPYING ${target}
 
 
-run:${target}
-	${exec} ${<D}/${<F} | tee ${<F}.log.txt ; echo status=$$? 
+run: ${target}
+	${exec} ${<D}/${<F}
+
+%.log.txt.tmp: %
+	${exec} ${<D}/${<F} | tee $@ ; echo status=$$?
+
+update: main.log.txt ${target}.log.txt.tmp
+	cp -av ${target}.log.txt.tmp  $<
+	-git diff --exit-code || git difftool $<
 
 
 clean:force
