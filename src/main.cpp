@@ -5,8 +5,6 @@
  *****************************************************************************/
 #include <iostream>
 
-#define CONFIG_WANT_LIBTRAKO
-
 #if defined(CONFIG_TRAKO_WANT_INLINE) && CONFIG_TRAKO_WANT_INLINE
 # include <trako/trako.cxx>
 #else
@@ -113,11 +111,13 @@ int main(int argc, char* argv[])
   for(int i=0;i<0xFF; i++)
     local.methodLong();
 
+#if defined(CONFIG_WANT_LIBTRAKO) && CONFIG_WANT_LIBTRAKO
   cout<<endl<<"# Multithreading"<<endl;
   {
     trako::MetaMutex<std::ostream> lock;
     TRAKO_2(SCOPE,"mutex: this line wont be split"); //<! @INFO
   }
+#endif
 
   cout<<endl<<"# Reports"<<endl;
   TRAKO_2(CONTEXT, printDurationStats); //<! @INFO
