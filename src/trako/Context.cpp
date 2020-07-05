@@ -33,7 +33,7 @@ Context::~Context()
 }
 
 
-void Context::print(char const * const context,bool force)
+void Context::print(char const * const context, bool force)
 {
   list<MetaClassInterface const *>::const_iterator it;
   
@@ -41,6 +41,6 @@ void Context::print(char const * const context,bool force)
        it != mList.end() ;
        ++it) {
     MetaClassInterface const * const p = *it;
-    if ( p ) p->print(force, context);
+    if ( p ) p->print(context, force);
   }
 }

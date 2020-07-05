@@ -6,11 +6,7 @@
 #ifndef MetaClass_h_
 #define MetaClass_h_
 
-#include <list> //TODO
-#include <cstdlib>
-
 #include "UtilsOf.h"
-#include "Context.h"
 
 namespace trako {
 
@@ -22,8 +18,9 @@ class MetaClassInterface
   virtual char const * getName() const=0;
 
   ///@param force : display even if did not changed since previous call
-  virtual int print(bool force=true, char const * const prefix=0) const 
-  {return 0;}
+  virtual int print(char const * const prefix=0, bool force=true) const {
+    return 0;
+  }
   virtual ~MetaClassInterface(){}
 };
 
@@ -34,6 +31,7 @@ template<typename T = void>
 class MetaClass : public MetaClassInterface
   {
   public: 
+  static int printStats(char const * const prefix=0, bool force=true);
 
   MetaClass();
 
@@ -50,7 +48,7 @@ class MetaClass : public MetaClassInterface
   }
 
   ///@param force : display even if did not changed since previous call  
-  virtual int print(bool force, char const * const prefix=0) const;
+  virtual int print(char const * const prefix=0, bool force=true) const;
 
   protected:
 
