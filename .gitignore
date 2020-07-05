@@ -6,8 +6,10 @@ MANIFEST
 *.lib
 *.dll
 *.exe
+*.tmp
 *~
 *.a
+tmp/
 src/main
 CMakeCache.txt
 CMakeFiles/
