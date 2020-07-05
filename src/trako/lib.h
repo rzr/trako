@@ -24,13 +24,13 @@ namespace trako {
 
 /// macro to inject a trako's meta object into the user's function
 #  define TRAKO_FUNCT()						\
-  trako::MetaScope lmeta(PRETTY_FUNCTION, FILE_LINE)  /*<! TrakO */	\
+  trako::MetaScope<> lmeta(PRETTY_FUNCTION, FILE_LINE)  /*<! TrakO */	\
   //}
 
 /// macro to inject a trako's meta object into user's scope 
 /// @param name : cstring to locate context
 #  define TRAKO_SCOPE(name)				\
-  trako::MetaScope lmeta(name , FILE_LINE) /*<! TrakO */	\
+  trako::MetaScope<> lmeta(name , FILE_LINE) /*<! TrakO */	\
   //}
 
 // ### tracing helper ###
