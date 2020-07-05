@@ -6,6 +6,9 @@
 #ifndef Macros_h_
 #define Macros_h_ __FILE__
 
+#define TRAKO_PACKAGE "trako"
+#define TRAKO_VERSION "0.1.0"
+
 /// msvc workaround
 #ifdef _MSC_VER
 # define __PRETTY_FUNCTION__ __FUNCTION__

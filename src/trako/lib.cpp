@@ -3,15 +3,6 @@
  * @author: Philippe Coval <rzr@users.sf.net> -- Rev: $Author: rzr $
  * Copyright: LGPL-3 (See README file that comes with this distribution)
  *****************************************************************************/
+#include "config.h"
 
-// This file can be used for inlining lib in object to linking to lib
-#include "trako.h"
-
-#include "config.cpp"
-#include "macros.cpp"
-
-#include "Context.cpp"
-#include "MetaClass.cpp"
-#include "MetaMutex.cpp"
-#include "MetaScope.cpp"
-#include "UtilsOf.cpp"
+#include "lib.h"

@@ -6,17 +6,18 @@
 #include <iostream>
 
 #define CONFIG_WANT_LIBTRAKO
-#include "trako/config.h"
-#include "trako/trako.h"
 
 #if defined(CONFIG_TRAKO_WANT_INLINE) && CONFIG_TRAKO_WANT_INLINE
-#include "trako/trako.cxx"
+# include <trako/trako.cxx>
+#else
+# include <trako/trako.h>
 #endif
 
-#include "Context.h"
+#ifndef TRACKO
+# warning "trako: TODO: include problem"
+#endif
 
 using namespace std;
-using namespace trako;
 
 
 class MyClass;
@@ -110,7 +111,7 @@ int main(int argc, char* argv[])
 
   cout<<endl<<"# Multithreading"<<endl;
   {
-    MetaMutex<std::ostream> lock;
+    trako::MetaMutex<std::ostream> lock;
     TRAKO_SCOPE("mutex: this line wont be split"); //<! @INFO
   }
 

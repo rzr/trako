@@ -5,6 +5,15 @@
  *****************************************************************************/
 #include "config.h"
 
+#ifndef PACKAGE
+#define PACKAGE TRAKO_PACKAGE
+#endif
+
+#ifndef VERSION
+#define VERSION TRAKO_VERSION
+#endif
+
+
 #ifndef CONFIG_SUPPORT_API_CXX_CSTDLIB_NO
 # include <cstdlib>
 #endif

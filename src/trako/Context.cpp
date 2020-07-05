@@ -8,9 +8,9 @@
 #include <cstdio>
 #include <iostream>
 
+#include "Context.h"
 #include "MetaClass.h"
 #include "macros.h"
-#include "trako.h"
 
 using namespace std;
 using namespace trako;
