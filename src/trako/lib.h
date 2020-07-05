@@ -35,16 +35,19 @@ namespace trako {
 
 // ### tracing helper ###
 
+#  define TRAKO_CALL_TAG_(ns, funct)            \
+  ns::funct(TRAKO_TAG(#funct ": ") )
+
 #  define TRAKO_CONTEXT(funct)                  \
-  trako::Context::funct(TRAKO_TAG("context: "))
+  TRAKO_CALL_TAG_(trako::Context, funct)
 
 /// trace all stats of all tracked class
 #  define TRAKO_COUNT()			\
-  trako::Context::printStats(TRAKO_TAG("trace: "))
+  TRAKO_CONTEXT(printStats)
 
 /// trace changed stats of all tracked class since previous trace
 #  define TRAKO_DIFF()			\
-  trako::Context::printDiff(TRAKO_TAG("trace: "))
+  TRAKO_CONTEXT(printDiff)
 
 /// trace stats of the tracked class from tracked typename
 #  define TRAKO_TYPE( type )			\
