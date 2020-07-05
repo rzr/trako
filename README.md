@@ -59,11 +59,8 @@ Features :
 
 ### USAGE ###
 
-Link your app with libtrako's enabled
 
-    CXXFLAGS+=-DCONFIG_WANT_LIBTRAKO=1
-    LDFLAGS+=-ltrako
-
+## Modify Code ##
 
 Add those "TRAKO keywords" in your tracked class ie :
 
@@ -106,6 +103,20 @@ For more have a look at those example files :
 
     src/main.cpp
     main.log.txt
+
+
+## Optional Link ##
+
+Link your app with libtrako's enabled
+
+    make CONFIG_TRAKO_WANT_INLINE=1
+
+    CXXFLAGS+=-DCONFIG_WANT_LIBTRAKO=1
+    LDFLAGS+=-ltrako
+
+Or Alternatively inline cxx file but include trako.cxx in only object
+
+    make CONFIG_TRAKO_WANT_INLINE=0
 
 
 ### KNOWN BUGS AND LIMITATIONS ###
