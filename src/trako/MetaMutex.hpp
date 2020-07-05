@@ -6,7 +6,6 @@
 #ifndef MetaMutex_hpp_
 #define MetaMutex_hpp_
 
-#include "config.h"
 #include "MetaMutex.h"
 
 

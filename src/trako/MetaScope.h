@@ -6,8 +6,6 @@
 #ifndef MetaScope_h_
 #define MetaScope_h_
 
-#include "trako.h"
-
 #ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
 # include <sys/time.h>
 #endif
