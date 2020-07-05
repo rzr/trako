@@ -7,7 +7,7 @@
 #define Macros_h_ __FILE__
 
 /// msvc workaround
-#ifndef __PRETTY_FUNCTION__
+#ifdef _MSC_VER
 # define __PRETTY_FUNCTION__ __FUNCTION__
 #endif
 
