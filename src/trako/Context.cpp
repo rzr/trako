@@ -10,6 +10,7 @@
 
 #include "Context.h"
 #include "MetaClass.h"
+#include "Duration.h"
 #include "macros.h"
 
 using namespace std;
@@ -43,4 +44,9 @@ void Context::print(char const * const context, bool force)
     MetaClassInterface const * const p = *it;
     if ( p ) p->print(context, force);
   }
+}
+
+void Context::printDurationStats(char const * const prefix)
+{
+  Duration<>::printStats(prefix);
 }

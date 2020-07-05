@@ -35,6 +35,9 @@ namespace trako {
 
 // ### tracing helper ###
 
+#  define TRAKO_CONTEXT(funct)                  \
+  trako::Context::funct(TRAKO_TAG("context: "))
+
 /// trace all stats of all tracked class
 #  define TRAKO_COUNT()			\
   trako::Context::printStats(TRAKO_TAG("trace: "))

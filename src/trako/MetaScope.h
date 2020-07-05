@@ -23,7 +23,7 @@ public:
   /// @param verbose : enable tracing
   MetaScope
   (char const * const name=0, char const * const prefix=0,
-   bool verbose=true);
+   bool verbose=true, bool profile=true);
 
   virtual ~MetaScope();
 
