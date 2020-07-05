@@ -17,6 +17,22 @@ namespace trako {
 #include "Context.h"
 #include "macros.h"
 
+/// Generic macros to minimize pollution symbols
+#  define TRAKO_ exit(42)
+
+#  define TRAKO(CMD)                            \
+  TRAKO_##CMD
+
+#  define TRAKO_1(CMD)                          \
+  TRAKO(CMD)()
+
+#  define TRAKO_2(CMD,a)                         \
+  TRAKO(CMD)(a)
+
+#  define TRAKO_3(CMD,a,b)                       \
+  TRAKO(CMD)(a,b)
+
+
 /// macro to inject a trako's meta object into the user's class
 #  define TRAKO_CLASS(type)					\
   private: trako::MetaClass<type> mMeta ## type ## _	/*<! TrakO */	\
