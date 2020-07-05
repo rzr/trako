@@ -9,6 +9,10 @@
 #include "trako/config.h"
 #include "trako/trako.h"
 
+#if defined(CONFIG_TRAKO_WANT_INLINE) && CONFIG_TRAKO_WANT_INLINE
+#include "trako/trako.cxx"
+#endif
+
 #include "Context.h"
 
 using namespace std;

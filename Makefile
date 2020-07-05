@@ -2,13 +2,17 @@
 default: all
 
 package?=trako
+
+# Alternatively "libtrako" can be inlined with trako.cxx instead of lib
+# CONFIG_TRAKO_WANT_INLINE?=1
+
 srcs?=$(wildcard src/${package}/*.cpp)
 headers?=$(wildcard src/${package}/*.h)
 objs?=${srcs:.cpp=.o}
 lib?=lib${package}.a
-src_main?=src/main.cpp
-target?=${src_main:.cpp=}
-
+main_src?=src/main.cpp
+main_exe?=${main_src:.cpp=}
+target?=${main_exe}
 CXXFLAGS+=-Isrc/${package} 
 CXXFLAGS+=-DCONFIG_WANT_LIBTRAKO=1
 
@@ -17,8 +21,13 @@ install_lib_dir?=${DESTDIR}/usr/lib/
 
 sudo?=$(shell which sudo 2> /dev/null || echo)
 
-all: COPYING ${target}
+ifeq (1, ${CONFIG_TRAKO_WANT_INLINE})
+CXXFLAGS+=-DCONFIG_TRAKO_WANT_INLINE=${CONFIG_TRAKO_WANT_INLINE}
+endif
 
+
+all: COPYING ${lib} ${target}
+	ls $^
 
 run: ${target}
 	${exec} ${<D}/${<F}
@@ -56,9 +65,13 @@ lib${package}.a: ${objs}
 #	nm --demangle $@
 
 
-${target}: ${src_main:.cpp=.o} ${lib}
+ifeq (1, ${CONFIG_TRAKO_WANT_INLINE})
+${target}: ${main_src:.cpp=.o}
 	${CXX} ${CXXFLAGS} -o $@ $^
-
+else
+${target}: ${main_src:.cpp=.o} ${lib}
+	${CXX} ${CXXFLAGS} -o $@ $^
+endif
 
 install: ${headers}
 	install -d ${install_header_dir}
