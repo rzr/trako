@@ -8,17 +8,17 @@
 #include "MetaClass.h"
 
 template<typename T>
-char const * MetaClass<T>::mName = 0;
+char const * trako::MetaClass<T>::mName = 0;
 
 template<typename T>
-MetaClass<T>* MetaClass<T>::mShared = 0;
+trako::MetaClass<T>* trako::MetaClass<T>::mShared = 0;
 
 template<typename T>
-CounterOf<T> MetaClass<T>::mCounter;
+CounterOf<T> trako::MetaClass<T>::mCounter;
 
 
 template<typename T>
-MetaClass<T>::MetaClass()
+trako::MetaClass<T>::MetaClass()
   {
     if ( ! mShared  ) { //tricky part here
       mShared = this; //prevent loop
@@ -33,7 +33,7 @@ MetaClass<T>::MetaClass()
 
 
 template<typename T>
-int MetaClass<T>::print(bool force, char const * const prefix) const
+int trako::MetaClass<T>::print(bool force, char const * const prefix) const
 {
   int res = CounterOf<T>::print( force, prefix);
   return res;

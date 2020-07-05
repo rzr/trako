@@ -19,6 +19,8 @@
 #include "MetaScope.h"
 #include "macros.h"
 
+using namespace trako;
+
 //template<>
 int MetaScope::mCount = 0;
 

@@ -6,11 +6,10 @@
 #ifndef Context_h_
 #define Context_h_
 
-class MetaClassInterface;
 
 #include <list>
-
-
+namespace trako {
+class MetaClassInterface;
 /// global context to track all metaclass and print them
 class Context
 {
@@ -33,7 +32,7 @@ class Context
 
  public:
   ///@param mList : stack on tracked class
-  static std::list<MetaClassInterface const *> mList;
+  static std::list<trako::MetaClassInterface const *> mList;
 
  private:
   Context();
@@ -42,6 +41,7 @@ class Context
 
   ///@param mSelf : meta object tied to the executable
   static Context mSelf;
+};
 };
 
 #endif

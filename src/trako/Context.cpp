@@ -13,6 +13,7 @@
 #include "trako.h"
 
 using namespace std;
+using namespace trako;
 
 
 std::list<MetaClassInterface const *> Context::mList;

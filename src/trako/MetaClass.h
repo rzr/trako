@@ -12,6 +12,7 @@
 #include "UtilsOf.h"
 #include "Context.h"
 
+namespace trako {
 
 /// trako's common function to be used elsewhere (not tied to a type)
 class MetaClassInterface
@@ -62,6 +63,7 @@ class MetaClass : public MetaClassInterface
   /// shared metaclass of all instances
   static MetaClass<T>* mShared;
   };
+};
 
 # include "MetaClass.hpp"
 

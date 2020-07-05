@@ -6,7 +6,6 @@
 #ifndef Trako_h_
 #define Trako_h_
 
-class MetaClassInterface;
 
 #include "MetaClass.h"
 #include "MetaScope.h"
@@ -14,6 +13,9 @@ class MetaClassInterface;
 #include "Context.h"
 #include "macros.h"
 
+namespace trako {
+  class MetaClassInterface;
+};
 
 // ### meta objects ###
 
@@ -32,12 +34,12 @@ class MetaClassInterface;
 
 /// macro to inject a trako's meta object into the user's class
 #  define TRAKO_CLASS(type)					\
-  private: MetaClass<type> mMeta ## type ## _	/*<! TrakO */	\
+  private: trako::MetaClass<type> mMeta ## type ## _	/*<! TrakO */	\
   //}
 
 /// macro to inject a trako's meta object into the user's function
 #  define TRAKO_FUNCT()						\
-  MetaScope lmeta(PRETTY_FUNCTION, FILE_LINE)  /*<! TrakO */	\
+  trako::MetaScope lmeta(PRETTY_FUNCTION, FILE_LINE)  /*<! TrakO */	\
   //}
 
 /// macro to inject a trako's meta object into user's scope 
@@ -50,11 +52,11 @@ class MetaClassInterface;
 
 /// trace all stats of all tracked class
 #  define TRAKO_COUNT()			\
-  Context::printAll(TRAKO_TAG("trace: "))
+  trako::Context::printAll(TRAKO_TAG("trace: "))
 
 /// trace changed stats of all tracked class since previous trace
 #  define TRAKO_DIFF()			\
-  Context::printDiff(TRAKO_TAG("trace: "))
+  trako::Context::printDiff(TRAKO_TAG("trace: "))
 
 /// trace stats of the tracked class from tracked typename
 #  define TRAKO_TYPE( type )			\
