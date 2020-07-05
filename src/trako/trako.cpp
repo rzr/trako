@@ -8,9 +8,5 @@
 
 #include <iostream>
 
-#ifndef CONFIG_WANT_LIBTRAKO
-#define CONFIG_WANT_LIBTRAKO
-#endif
-
 #include "trako.h"
 
