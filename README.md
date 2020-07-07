@@ -1,6 +1,30 @@
+# TRAKO #
+
+[![GitHub forks](
+https://img.shields.io/github/forks/rzr/trako.svg?style=social&label=Fork&maxAge=2592000
+)](
+https://GitHub.com/rzr/trako/network/
+)
+[![license](
+https://img.shields.io/badge/license-LGPL-3p.svg
+)](LGPL-3p)
+[![Fediverse](
+https://img.shields.io/mastodon/follow/279303?domain=https%3A%2F%2Fmastodon.social&style=social
+)](
+https://mastodon.social/@rzr/104472726388678528#Trako#
+)
+[![IRC Channel](
+https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg
+)](
+https://kiwiirc.com/client/irc.freenode.net/#iot
+)
+
 Package: trako
+
 Author: Philippe Coval <rzr@users.sf.net>
+
 URL: http://rzr.online.fr/
+
 Description: C++ tracking library that count instances funct calls etc
 
 
