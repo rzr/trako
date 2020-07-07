@@ -8,9 +8,10 @@ export CONFIG_WANT_LIBTRAKO
 # Alternatively "libtrako" can be inlined with trako.cxx instead of lib
 CONFIG_TRAKO_WANT_INLINE?=0
 export CONFIG_TRAKO_WANT_INLINE
+export V?=1
 
-srcs?=$(wildcard src/${package}/*.cpp)
-headers?=$(wildcard src/${package}/*.h)
+srcs?=$(wildcard src/${package}/*.cpp | sort)
+headers?=$(wildcard src/${package}/*.h | sort)
 objs?=${srcs:.cpp=.o}
 lib?=lib${package}.a
 main_src?=src/main.cpp
@@ -115,12 +116,20 @@ rule/test/want/%:
 	make CONFIG_WANT_LIBTRAKO=${@F} run
 	make CONFIG_WANT_LIBTRAKO=${@F} distclean
 
+rule/test/inline/%:
+	make rule/test/want/1 CONFIG_TRAKO_WANT_INLINE=${@F}
+
+rule/test/inline:
+	make rule/test/inline/0
+	make rule/test/inline/1
+
 test: distclean rule/src/test
 	make rule/test/want/1
 	make rule/test/want/1 | grep 'trako: '
 	make rule/test/want/0
 	make rule/test/want/0 | grep 'trako: ' && exit 1 || echo "ignored"
-	make rule/test/want/1 CONFIG_TRAKO_WANT_INLINE=1
+	make rule/test/inline/0
+	make rule/test/inline/1
 	-git status
 
 #eof
