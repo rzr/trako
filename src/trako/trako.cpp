@@ -6,7 +6,5 @@
 
 #include "config.h"
 
-#include <iostream>
-
 #include "trako.h"
 

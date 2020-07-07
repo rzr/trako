@@ -4,4 +4,5 @@
  * Copyright: LGPL-2 (See README file that comes with this distribution)
  *****************************************************************************/
 #include "config.h"
-#include "MetaMutex.h"
+
+#include "MetaMutex.hpp"

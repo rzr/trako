@@ -4,5 +4,6 @@
  * Copyright: LGPL-2 (See README file that comes with this distribution)
  *****************************************************************************/
 #include "config.h"
-#include "MetaClass.h"
+
+#include "MetaClass.hpp"
 

@@ -4,4 +4,5 @@
  * Copyright: LGPL-3 (See README file that comes with this distribution)
  *****************************************************************************/
 #include "config.h"
-#include "UtilsOf.h"
+
+#include "UtilsOf.hpp"
