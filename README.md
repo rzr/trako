@@ -122,12 +122,12 @@ most of them are already in progress if not done
 I plan to publish them once polished...
 
 * Features
-** TODO [#A] assertion logs
-** TODO [#B] script to ins/des/intrument source
-** TODO [#B] also track non user pointers even on closed source code
-** TODO [#C] port to other compilers clang msvc etc
-** TODO [#C] script to display source along its trace
-** TODO [#C] Integration with other tools, XML, gnuplot etc
+  * TODO [#A] assertion logs
+* TODO [#B] script to ins/des/intrument source
+  * TODO [#B] also track non user pointers even on closed source code
+* TODO [#C] port to other compilers clang msvc etc
+  * TODO [#C] script to display source along its trace
+* TODO [#C] Integration with other tools, XML, gnuplot etc
 
 * Refactoring tasks : 
-** TODO [#C] use STL's functions objects
+  * TODO [#C] use STL's functions objects
