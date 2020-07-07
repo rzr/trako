@@ -7,47 +7,51 @@
 #define Context_h_
 
 #include <list>
+#include <map>
+
+namespace trako {  
+  class MetaClassInterface;
+};
+#include "Duration.h"
 
 namespace trako {
-class MetaClassInterface;
-}
-
-namespace trako {
-
-/// global context to track all metaclass and print them
+  
 template <typename T=void>
 class Context
 {
- public:
+public:
+  static Context<>& getInstance();
+
+//private:
 
   ///@param prefix : used to put context in verbose output
-  static void printStats(char const * const prefix=0) {
+  void printStats(char const * const prefix=0) {
     print(prefix, true);
   }
 
   ///@param prefix : used to put context in verbose output
-  static void printDiff(char const * const prefix=0) {
+  void printDiff(char const * const prefix=0) {
     print(prefix, false);
   }
 
-  static void printDurationStats(char const * const prefix=0);
+  void printDurationStats(char const * const prefix=0, bool verbose = true);
 
- protected:
+// protected:
 
   ///@param force : all class type else only changed
-  static void print(char const * const context=0, bool force=false);
+  void print(char const * const context=0, bool force=false);
 
  public:
+  std::list<MetaClassInterface const *>& getClassCollection();
+  std::map<char const * const, Duration<> >& getDurationCollection();
+
   ///@param mList : stack on tracked class
-  static std::list<trako::MetaClassInterface const *> mList;
+  std::list<MetaClassInterface const *> mClassCollection;
 
  private:
   Context();
-  
+public:  
   virtual ~Context();
-
-  ///@param mSelf : meta object tied to the executable
-  static Context mSelf;
 };
 };
 #include "Context.hpp"
