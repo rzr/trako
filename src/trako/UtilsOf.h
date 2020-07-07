@@ -114,7 +114,6 @@ class CounterOf
    N print(char const * const prefix=TRAKO_TAG("trace: "), bool force=true) //const
   {
     N vcur = 0,vmax = 0, vevr =0, vdif=0;
-    static int item = sizeof(T);
     
     if ( force || isChanged() != 0) {
       vdif = getDiff();
@@ -127,7 +126,6 @@ class CounterOf
 	<< "<"<<UtilsOf<T>::nametype()<<">"
 	<< (( vdif >= 0 ) ? " +" : " " ) <<vdif
 	<< "=" << vcur
-	<< " = " << vcur * item << "B"
 	<< " (<" << vmax << "<" << vevr <<" )"
 	<< std::endl;
     }
