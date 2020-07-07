@@ -7,15 +7,16 @@
 #define Trako_Trako_cxx_
 
 // This file can be used for inlining lib in object to linking to lib
-#include "trako.h"
+#warning "trako: deprecated just include <trako/trako.h">
 
 #include "config.cpp"
-#include "macros.cpp"
-
 #include "Context.cpp"
+#include "Duration.cpp"
+#include "lib.cpp"
+#include "macros.cpp"
 #include "MetaClass.cpp"
 #include "MetaMutex.cpp"
-#include "MetaScope.cpp"
+#include "trako.cpp"
 #include "UtilsOf.cpp"
 
 #endif
