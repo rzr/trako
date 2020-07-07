@@ -8,6 +8,11 @@ https://GitHub.com/rzr/trako/network/
 [![license](
 https://img.shields.io/badge/license-LGPL-3p.svg
 )](LGPL-3p)
+[![Codacy Badge](
+https://app.codacy.com/project/badge/Grade/1974469fd285468380f5223dee280949
+)](
+https://www.codacy.com/manual/rzr/trako?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rzr/trako&amp;utm_campaign=Badge_Grade
+)
 [![Fediverse](
 https://img.shields.io/mastodon/follow/279303?domain=https%3A%2F%2Fmastodon.social&style=social
 )](
