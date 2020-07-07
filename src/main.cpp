@@ -4,24 +4,24 @@
  * Copyright: LGPL-3 (See README file that comes with this distribution)
  *****************************************************************************/
 #include <iostream>
-
+///< Trako: First download headers https://github.com/rzr/trako/
 #define EXAMPLE_CONFIG_TRAKO 1  ///< Trako: Example's configuration (optional)
 
 #if defined(EXAMPLE_CONFIG_TRAKO) && EXAMPLE_CONFIG_TRAKO
-# include <trako/trako.h> ///< Trako: Lib must be included
-# define EXAMPLE(arg)                                                   \
-  TRAKO(arg) ///< Trako: TRAKO macro will be used through EXAMPLE macro (optional)
+# include <trako/trako.h> ///< Trako: Find Headers (If missing clone from git)
+# define EXAMPLE_TRAKO(arg)                                                   \
+  TRAKO(arg) ///< Trako: Wrap to TRAKO macro to avoid spreading TRACO macro into example
 #else
-# define EXAMPLE(arg) //<! Trako: Extra macro to avoid speading TRACO into example (optional)
+# define EXAMPLE_TRAKO(arg) //<! Trako: If trako not included macro can remain in code
 #endif
 
 using namespace std;
 
 int myFunction(int arg=0)
 {
-  EXAMPLE(FUNCT()); //<! Trako: A meta object is injected here for monitoring function
+  EXAMPLE_TRAKO(FUNCT()); //<! Trako: A meta object is injected here for monitoring function
   if (arg) {
-    EXAMPLE(SCOPE("myFunctionAfterTest")); //<! Trako: or for minitoring scope
+    EXAMPLE_TRAKO(SCOPE("myFunctionAfterTest")); //<! Trako: or for minitoring scope
     myFunction(--arg);
   }
 }
@@ -30,7 +30,7 @@ int myFunction(int arg=0)
 class MyClass
 {
 public:
-  EXAMPLE(CLASS(MyClass)); //<! Trako: meta object is injected here for monitoring instances
+  EXAMPLE_TRAKO(CLASS(MyClass)); //<! Trako: meta object is injected here for monitoring instances
 };
 
 
@@ -38,28 +38,28 @@ class MyOtherClass
 {
 public:
   void myMethod() {
-    EXAMPLE(FUNCT()); // <! Trako: Will trace function's start ("{") and end ("}")
+    EXAMPLE_TRAKO(FUNCT()); // <! Trako: Will trace function's start ("{") and end ("}")
   }
 
   void mySubMethod() {
-    EXAMPLE(FUNCT_VERBOSE()); //<! Trako: Same as FUNCT (optional)
+    EXAMPLE_TRAKO(FUNCT_VERBOSE()); //<! Trako: Same as FUNCT (optional)
     myLongMethod();
   }
 
 protected:
 
   void myLongMethod() {
-    EXAMPLE(FUNCT_SILENT()); //<! Trako: Track time but don't trace
+    EXAMPLE_TRAKO(FUNCT_SILENT()); //<! Trako: Track time but don't trace
     for(int i=0;i<0xFFFF;i++){ i = i + 0 * i * 0xFFFFF / 42.;}
   }
 
-  EXAMPLE(CLASS(MyOtherClass)); //<! Same as MyClass, note the type as argument
+  EXAMPLE_TRAKO(CLASS(MyOtherClass)); //<! Same as MyClass, note the type as argument
 };
 
 struct MyEncapsulerClass
 {
   virtual ~MyEncapsulerClass() {
-    EXAMPLE(FUNCT()); //<! Trako: Same as FUNCT (optional)
+    EXAMPLE_TRAKO(FUNCT()); //<! Trako: Same as FUNCT (optional)
   }
   MyClass mMember;
 };
@@ -67,83 +67,83 @@ struct MyEncapsulerClass
 /// sample unit test programm
 int main(int argc, char* argv[])
 {
-  EXAMPLE(FUNCT()); //<! Trako: trace: ... main.cpp: ... FUNCT: { int main ...
+  EXAMPLE_TRAKO(FUNCT()); //<! Trako: trace: ... main.cpp: ... FUNCT: { int main ...
   int status=0;
 
   myFunction(2);
 
   cout<<endl<<"# Profiling classes instances"<<endl;
   MyClass nested;
-  EXAMPLE(COUNT()); //<! trako: Count all instances of all classed, Expected: +1=1
+  EXAMPLE_TRAKO(COUNT()); //<! trako: Count all instances of all classed, Expected: +1=1
   {
     MyClass nested;
-    EXAMPLE(COUNT()); //<! trako: Expected: +1=2
+    EXAMPLE_TRAKO(COUNT()); //<! trako: Expected: +1=2
   }
   MyOtherClass other;
-  EXAMPLE(COUNT()); //<! trako: Expected: MyClass=1, MyOtherClass=+1
+  EXAMPLE_TRAKO(COUNT()); //<! trako: Expected: MyClass=1, MyOtherClass=+1
 
 
   MyClass mySclass;
   {
     {
       MyOtherClass myOther;
-      EXAMPLE(DIFF()); //<! trako: Only changed instances, Expected: +2
+      EXAMPLE_TRAKO(DIFF()); //<! trako: Only changed instances, Expected: +2
 
       MyClass* ptr = new MyClass;
-      EXAMPLE(DIFF()); //<! trako: Expected: +1=3
+      EXAMPLE_TRAKO(DIFF()); //<! trako: Expected: +1=3
 
       delete( ptr );
-      EXAMPLE(DIFF()); //<! trako: Expected: -1=2
+      EXAMPLE_TRAKO(DIFF()); //<! trako: Expected: -1=2
     }
 
-    EXAMPLE(TYPE(MyClass)); //<! tarko: Only count instances of type, Expected: -1=1
+    EXAMPLE_TRAKO(TYPE(MyClass)); //<! tarko: Only count instances of type, Expected: -1=1
   }
 
   cout<<endl<<"# Profiling methods"<<endl;
 
-  EXAMPLE(COUNT()); //<! trako: Print all types
+  EXAMPLE_TRAKO(COUNT()); //<! trako: Print all types
   {
     MyOtherClass local;
     local.myMethod();
     local.myMethod();
   }
-  EXAMPLE(DIFF()); //<! trako: print updated
+  EXAMPLE_TRAKO(DIFF()); //<! trako: print updated
 
   MyOtherClass myOther;
   myOther.mySubMethod();
   myOther.mySubMethod();
-  EXAMPLE(PRINT_CLASS()); //<! trako:
+  EXAMPLE_TRAKO(PRINT_CLASS()); //<! trako:
 
   cout<<endl<<"# Profiling program"<<endl;
-  EXAMPLE(PRINT_FUNCT());  //<! trako: Print functions durations
+  EXAMPLE_TRAKO(PRINT_FUNCT());  //<! trako: Print functions durations
   {
     MyOtherClass local;
-    EXAMPLE(DIFF()); //<! trako:
+    EXAMPLE_TRAKO(DIFF()); //<! trako:
   }
 
-  EXAMPLE(COUNT()); //<! trako:
+  EXAMPLE_TRAKO(COUNT()); //<! trako:
 
   cout<<endl<<"# Profiling scopes"<<endl;
   for (int x=0;x<2;x++){
-    EXAMPLE(SCOPE("row")); //<! trako: same as Functions but need to be named
+    EXAMPLE_TRAKO(SCOPE("row")); //<! trako: same as Functions but need to be named
     for (int y=0;y<2;y++){
-      EXAMPLE(SCOPE("col")); // <<! trako: if not named  "file:line: " will be generated
+      EXAMPLE_TRAKO(SCOPE("col")); // <<! trako: if not named  "file:line: " will be generated
     }
   }
   for(int i=0;i<0xF; i++)
     myOther.mySubMethod();
 
-#if defined(CONFIG_TRAKO) && CONFIG_TRAKO
+#if defined(EXAMPLE_CONFIG_TRAKO) & EXAMPLE_CONFIG_TRAKO
   cout<<endl<<"# Multithreading"<<endl;
   {
     trako::MetaMutex<std::ostream> lock; //<! trako: Extra object if need
-    EXAMPLE(SCOPE("mutex: this line wont be split")); //<!
+    EXAMPLE_TRAKO(SCOPE("mutex: this line wont be split")); //<!
   }
 #endif
 
   cout<<endl<<"# Reports"<<endl;
-  EXAMPLE(PRINT_CLASS()); //<! trako: Print Stats
-  EXAMPLE(PRINT_FUNCT()); //<! trako: Print Duration's Stats
+  EXAMPLE_TRAKO(PRINT_CLASS()); //<! trako: Print Stats
+  EXAMPLE_TRAKO(PRINT_FUNCT()); //<! trako: Print Duration's Stats
   cout<<endl<<"# Quitting"<<endl;
 
   return status;
