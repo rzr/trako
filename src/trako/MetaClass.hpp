@@ -27,7 +27,7 @@ trako::MetaClass<T>::MetaClass()
       mShared = this; //prevent loop
       mShared = new MetaClass;
       mName = UtilsOf<T>::nametype();
-      Context::mList.push_back( mShared );
+      Context<T>::mList.push_back( mShared );
     } else { //this part will be executed by new mShared on 1st
       mCounter.add();
     }
