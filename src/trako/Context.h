@@ -6,11 +6,16 @@
 #ifndef Context_h_
 #define Context_h_
 
-
 #include <list>
+
 namespace trako {
 class MetaClassInterface;
+}
+
+namespace trako {
+
 /// global context to track all metaclass and print them
+template <typename T=void>
 class Context
 {
  public:
@@ -45,5 +50,5 @@ class Context
   static Context mSelf;
 };
 };
-
+#include "Context.hpp"
 #endif

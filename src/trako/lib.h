@@ -51,7 +51,7 @@ namespace trako {
   ns::funct(TRAKO_TAG(#funct ": ") )
 
 #  define TRAKO_CONTEXT(funct)                  \
-  TRAKO_CALL_TAG_(trako::Context, funct)
+  TRAKO_CALL_TAG_(trako::Context<>, funct)
 
 /// trace all stats of all tracked class
 #  define TRAKO_COUNT()			\
