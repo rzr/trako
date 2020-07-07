@@ -3,20 +3,20 @@
  * @author: Philippe Coval <rzr@users.sf.net> -- Rev: $Author: rzr $
  * Copyright: LGPL-3 (See README file that comes with this distribution)
  *****************************************************************************/
-#ifndef Trako_h_
-#define Trako_h_
+#ifndef Trako_Trako_h_
+#define Trako_Trako_h_
 
 namespace trako {};
 
-#ifndef CONFIG_WANT_LIBTRAKO
-# define CONFIG_WANT_LIBTRAKO 0
+#ifndef TRAKO_CONFIG
+# define TRAKO_CONFIG 1
 #endif
 
-#if CONFIG_WANT_LIBTRAKO
-#  warning "trako: enabled it may slowdown your program :TODO:"
+#if TRAKO_CONFIG
+#  warning "trako: enabled, TRAKO macro can be used"
 #  include "lib.h"
 #else
-#  warning "trako: not enabled maybe it can be removed :TODO:"
+#  warning "trako: disabled, only TRAKO macros are still exported, remove include if not needed"
 #  define TRAKO(CMD) /// !<empty block, that will not be compiled
 #  define TRAKO_1(CMD)  /// !<empty block have no effect on perf
 #  define TRAKO_2(CMD, a) ///!<empty if command use args
@@ -29,5 +29,6 @@ namespace trako {};
 #  define TRAKO_TYPE(type) /// !<deprecated prefer TRAKO_N(TYPE, name)
 #  define TRAKO_TYPE_OF(object) /// !<deprecated prefer TRAKO_N(...)
 #endif
+
 
 #endif //_h_

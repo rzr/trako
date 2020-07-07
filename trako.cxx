@@ -3,9 +3,10 @@
  * @author: Philippe Coval <rzr@users.sf.net> -- Rev: $Author: rzr $
  * Copyright: LGPL-2 (See README file that comes with this distribution)
  *****************************************************************************/
-#ifndef DirTrako_cpp_
-#define DirTrako_cpp_
+#ifndef Trako_cxx_
+#define Trako_cxx_
 
 #include "src/trako/trako.cxx"
 
-#endif //_h_
+#endif
+

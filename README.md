@@ -117,19 +117,16 @@ main.log.txt
 Link your app with libtrako's enabled
 
 ```sh
-make CONFIG_TRAKO_WANT_INLINE=1
+make CONFIG_TRAKO_LIB=1
 ```
 
 ```make
-CXXFLAGS+=-DCONFIG_WANT_LIBTRAKO=1
+CXXFLAGS+=-DCONFIG_TRAKO_LIB=1
 LDFLAGS+=-ltrako
 ```
 
 Or Alternatively inline cxx file but include trako.cxx in only object
 
-```make
-make CONFIG_TRAKO_WANT_INLINE=0
-```
 
 ### KNOWN BUGS AND LIMITATIONS ###
 

@@ -5,15 +5,7 @@
  *****************************************************************************/
 #include <iostream>
 
-#if defined(CONFIG_TRAKO_WANT_INLINE) && CONFIG_TRAKO_WANT_INLINE
-# include <trako/trako.cxx>
-#else
-# include <trako/trako.h>
-#endif
-
-#ifndef TRACKO
-# warning "trako: TODO: include problem"
-#endif
+#include <trako/trako.h>
 
 using namespace std;
 
@@ -111,7 +103,7 @@ int main(int argc, char* argv[])
   for(int i=0;i<0xFF; i++)
     local.methodLong();
 
-#if defined(CONFIG_WANT_LIBTRAKO) && CONFIG_WANT_LIBTRAKO
+#if defined(TRAKO_CONFIG) && TRAKO_CONFIG
   cout<<endl<<"# Multithreading"<<endl;
   {
     trako::MetaMutex<std::ostream> lock;
