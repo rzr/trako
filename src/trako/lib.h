@@ -60,17 +60,18 @@ namespace trako {
 
 /// trace all stats of all tracked class
 #  define TRAKO_COUNT()                         \
-  TRAKO_CONTEXT(printStats)
+  trako::Context<>::getInstance().printStats(TRAKO_TAG("CLASS/COUNT: "));
 
 /// trace changed stats of all tracked class since previous trace
-#  define TRAKO_DIFF()                          \
-  TRAKO_CONTEXT(printDiff)
+#  define TRAKO_DIFF()                   \
+  trako::Context<>::getInstance().printDiff(TRAKO_TAG("CLASS/DIFF: "));
 
 #  define TRAKO_PRINT_FUNCT()                   \
-  TRAKO_CONTEXT(printDurationStats)
+  trako::Context<>::getInstance().printDurationStats(TRAKO_TAG("FUNCT/STATS:"));
+
 
 #  define TRAKO_PRINT_CLASS()                   \
-  TRAKO_CONTEXT(printStats)
+  trako::Context<>::getInstance().printStats(TRAKO_TAG("CLASS/STATS:"));
 
 #  define TRAKO_PRINT(type)                     \
   TRAKO_PRINT#type
