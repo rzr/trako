@@ -24,10 +24,7 @@ https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg
 https://kiwiirc.com/client/irc.freenode.net/#iot
 )
 
-* Package: trako
-* Author: Philippe Coval <rzr@users.sf.net>
-* URL: <http://rzr.online.fr/>
-* Description: C++ tracking library that count instances funct calls etc
+Trako profiler to optimize C++ projects with a single macro !
 
 ## INTRODUCTION ##
 
@@ -43,34 +40,62 @@ Features :
 
 * Methods profiling :
   * trace methods call stack (entering or leaving)
-  * mesure time spend in method or scope
+  * measure time spend in method or scope
   * count how many times methods have been called
   * ...
 
 * Prevent pollution of code :
   * enable or disable using a single defines and link with a lib
-  * no additionnal code in user's files beside those a macros
-  * usage of macros that can easly disabled or located removed etc
+  * no additional code in user's files beside those a macros
+  * usage of macros that can easily disabled or located removed etc
   * can be used everywhere investigation need to be focused on
     as long as you have the source code
 
-* Integration in emacs (and probally other grep supported editors/IDE) :
+* Integration in emacs (and probably other grep supported editors/IDE) :
   * file:line log entry format , just jump to the right place in one click
 
 ### USAGE ###
 
-## Modify Code ##
+## Download ##
 
-Add those "TRAKO keywords" in your tracked class ie :
+In your project directory or system dirs (ie: /usr/local/include/trako)
+
+```sh
+git clone --depth 1 https://github.com/rzr/trako
+```
+
+## Include Header ##
+
+Include trako.h in your project,
+let me suggest to do this a common included file (ie: config.h or private.h etc):
 
 ```c++
-class MyClass { TRAKO_CLASS(MyClass); };
+#define EXAMPLE_CONFIG_TRAKO 1
+
+#if defined(EXAMPLE_CONFIG_TRAKO) && EXAMPLE_CONFIG_TRAKO
+# include <trako/trako.h>
+# define EXAMPLE(cmd)                           \
+  TRAKO(cmd)
+#else
+# define EXAMPLE(cmd)                           \
+  TRAKO(cmd)
+#endif
+```
+
+## Modify Code ##
+
+Use the single "TRAKO" macro with a couple of TRAKO commands
+
+For classes:
+
+```c++
+class MyClass { TRAKO(CLASS(MyClass)); };
 ```
 
 Then you can collect stats, anywhere you have to call :
 
 ```c++
-TRAKO_DIFF(); //will print new instances
+TRAKO(PRINT(CLASS()); //will print new instances
 ```
 
 and the result will be printed to console :
@@ -94,45 +119,33 @@ read it as :
 If you want to profile time spend in methods, ie:
 
 ```c++
-void funct() { TRAKO_FUNCT(); };
+void funct() { TRAKO(FUNCT); };
 ```
 
-will display time since application startup and once returning function, ie:
+Or Scopes too:
+
+```c++
+void funct(bool enabled) { if (enabled) { TRAKO(SCOPE("enabled")); } };
+```
+
+Then call and time will be traced like:
 
 ```
 src/main.cpp:20: scope: { method @1 [=0s 706us]
 src/main.cpp:26: scope: { methodSub @2 [=0s 715us]
-src/main.cpp:26: scope: } methodSub @2 [+0s 3us]
+src/main.cpp:26: scope: } funct() @1 [+0s 3us]
 ```
 
-For more have a look at those example files :
+For more have a look at the example file and it's trace :
 
-```
-src/main.cpp
-main.log.txt
-```
-
-## Optional Link ##
-
-Link your app with libtrako's enabled
-
-```sh
-make CONFIG_TRAKO_LIB=1
-```
-
-```make
-CXXFLAGS+=-DCONFIG_TRAKO_LIB=1
-LDFLAGS+=-ltrako
-```
-
-Or Alternatively inline cxx file but include trako.cxx in only object
-
+* src/main.cpp
+* main.log.txt
 
 ### KNOWN BUGS AND LIMITATIONS ###
 
 * fell free to report discovered bugs, wishes etc by email
 * supporting only g++ so far
-* barly supports typename collision among different namespaces
+* barely supports typename collision among different namespaces
 
 ### TODO ###
 
