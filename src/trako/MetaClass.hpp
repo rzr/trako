@@ -8,10 +8,8 @@
 #include <list>
 
 #include "MetaClass.h"
+#include "Duration.h"
 #include "Context.h"
-
-template<typename T>
-char const * trako::MetaClass<T>::mName = 0;
 
 template<typename T>
 trako::MetaClass<T>* trako::MetaClass<T>::mShared = 0;
@@ -19,20 +17,66 @@ trako::MetaClass<T>* trako::MetaClass<T>::mShared = 0;
 template<typename T>
 CounterOf<T> trako::MetaClass<T>::mCounter;
 
+template <typename T>
+CounterOf< trako::MetaClass<T> > trako::MetaClass<T>::mDepthCounter;
 
 template<typename T>
-trako::MetaClass<T>::MetaClass()
-  {
-    if ( ! mShared  ) { //tricky part here
+trako::MetaClass<T>::MetaClass(char const * const prefix,
+                               char const * const name,
+                               bool verbose, bool profile
+  )
+  : mPrefix(prefix), mName(name), mVerbose(verbose), mProfile(profile)
+{
+  if (!name) {
+    mName=UtilsOf<T>::nametype();
+  }
+  mFunct = (mPrefix);
+  if (!mFunct) {
+    mVerbose = false;
+    mPrefix = mName;
+    mProfile = false;
+    if (!mShared ) { //tricky part here
       mShared = this; //prevent loop
-      mShared = new MetaClass;
-      mName = UtilsOf<T>::nametype();
-      Context<T>::mList.push_back( mShared );
+      mShared = new MetaClass<T>;
+      Context<>::mList.push_back( mShared );
     } else { //this part will be executed by new mShared on 1st
       mCounter.add();
     }
+  } else {
+    if (mVerbose) {
+      printf("%s{ %s @%d", mPrefix, mName, mDepthCounter.getValue());
+    }
+    mDepthCounter.add();
+    if (mProfile) {
+      mDuration = &Duration<>::get(mPrefix, mName);
+      mDuration->start(mVerbose);
+      }
+    if (mVerbose) {
+      std::cout<<std::endl;
+    }
   }
- 
+}
+
+
+template<typename T>
+trako::MetaClass<T>::~MetaClass()
+{
+  if (!mFunct && (mShared != this)) {
+    mCounter.sub();
+  }
+  if (mFunct) {
+    mDepthCounter.sub();
+    if (mVerbose) {
+      printf("%s} %s @%d", mPrefix, mName, mDepthCounter.getValue());
+    }
+    if (mProfile) {
+      mDuration->stop(mVerbose);
+    }
+    if (mVerbose) {
+      std::cout<<std::endl;
+    }
+  }
+}
 
 
 template<typename T>

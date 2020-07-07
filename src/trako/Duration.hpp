@@ -25,72 +25,113 @@
 
 #include <iostream>
 #include <algorithm>
+#include <map>
 
 #include "UtilsOf.h"
 #include "Duration.h"
 
 #include "macros.h"
 
-using namespace std;
-
 template <typename T>
-unsigned long Duration<T>::mElapsed{1};
+unsigned long trako::Duration<T>::mElapsed{0};
 
 
 #ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
 template <typename T>
-timeval Duration<T>::mEpocTime;
+timeval trako::Duration<T>::mEpocTime;
 template <typename T>
-timeval Duration<T>::mNowTime;
+timeval trako::Duration<T>::mNowTime;
 #endif
 
 template <typename T>
-std::map<char const * const, Duration<T>> Duration<T>::mCollection;
+std::map<char const * const, trako::Duration<> > trako::Duration<T>::mCollection;
 
 template <typename T>
-Duration<T>::Duration(bool verbose)
-  : mName{}, mCount{}, mVerbose{verbose},
-    mValue{}, mCumulated{} , mRatio{},
+trako::Duration<T>::Duration(char const * const prefix,
+                             char const * const name,  bool verbose)
+  : mPrefix{prefix},
+    mName{name}, mCount{}, mVerbose{verbose},
+    mValue{}, mCumulated{} , mRatio{}, mDepth{},
+    mProfile(true),
     mMaximum{}, mMinimum{}
 #ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
   , mStartTime{}, mStopTime{}
 #endif
 {
-  static int init=0;
-  if (!init++) { mEpocTime = getTime(); }
+  static int init=0; // could be relocated in get to have 100% for 1st caller
+  if (!init++) {
+    mEpocTime = getTime();
+  }
+  mStartTime.tv_sec = 0; mStartTime.tv_usec = 0;
+  mStopTime.tv_sec = 0; mStopTime.tv_usec = 0;
 }
 
 
 template <typename T>
-Duration<T>& Duration<T>::get(char const * const name)
+trako::Duration<>& trako::Duration<T>::get(char const * const id,
+                                           char const * const name)
 {
-  Duration<T>& result = mCollection[name];
-  result.mName=name;
+  Duration<T>& result = mCollection[id];
+  result.mPrefix = id;
+  result.mName = (name) ? name : id;
   return result;
 }
 
 template <typename T>
-void Duration<T>::print(char const * const prefix) const
+void trako::Duration<T>::print(char const * const prefix, bool verbose,
+                               char const * const suffix) const
 {
-  cout<<prefix;
-  if (!mCumulated) {
-    cout<<"???.??%";
-  } else {
-    cout << std::fixed << std::setprecision(2)
-         << std::setfill('0') << std::setw(6)
-         << mCumulated * 100.f / mElapsed << "%";
+  std::cout << ( (!prefix) ? mPrefix : prefix );
+  int elapsed = mElapsed;
+  if (!elapsed) { mElapsed = 1; }
+  int count = mCount;
+  if (!count) { count = 1; }
+  if (!verbose) {
+    return;
   }
-  cout<<" <" << mName << "> [~"
-      << mCumulated / mCount / 1000000L << "s="
-      << mCumulated / mCount << "us"
-      << "*" << mCount << "/" << mElapsed << "us" << "]" <<endl;
+
+  //assert(mCumulated<=mElapsed); //TODO
+  if (!mCumulated) {
+    std::cout << "???.??%";
+  } else {
+    std::cout << std::fixed << std::setprecision(2)
+         << std::setfill('0') << std::setw(6)
+         << mCumulated * 100.f / elapsed << "%";
+  }
+  std::cout << " <" << mName << "> [~"
+      << mCumulated / count / 1000000L << "s="
+      << mCumulated / count << "us"
+      << "*" << count << "~=" << elapsed << "us" << "]" <<std::endl;
 }
 
 
-template <typename T>
-timeval Duration<T>::getTime()
-{
 #ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
+
+template <typename T>
+unsigned long trako::Duration<T>::timeToDuration(timeval time)
+{
+  return 1000000L * time.tv_sec + time.tv_usec;
+}
+
+template <typename T>
+timeval trako::Duration<T>::diffTime(timeval before, timeval after)
+{
+  timeval result;
+  result.tv_sec = after.tv_sec - before.tv_sec;
+  result.tv_usec = after.tv_usec - before.tv_usec;
+  return result;
+}
+
+template <typename T>
+unsigned long trako::Duration<T>::getDuration()
+{
+  unsigned long result=timeToDuration(diffTime(mEpocTime, getTime()));
+  return result;
+}
+
+template <typename T>
+timeval trako::Duration<T>::getTime()
+{
   int failed = gettimeofday(&mNowTime,0);
   assert(!failed);
   if (!failed) {
@@ -99,56 +140,74 @@ timeval Duration<T>::getTime()
   }
   mElapsed = (mNowTime.tv_sec * 1000000L +  mNowTime.tv_usec);
   return mNowTime;
-#endif
 }
-
+#endif
 
 template <typename T>
-void Duration<T>::start(bool verbose)
+void trako::Duration<T>::start(bool verbose)
 {
-  mValue=0;
-  mRatio = mCumulated / (float) mElapsed;
-#ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
-  mStartTime = getTime();
-  mStopTime.tv_sec = mStopTime.tv_usec = 0;
   if (verbose) {
-    cout << " ["
+    //print(mName);
+  }
+#ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
+  mValue=0;
+  getTime();
+  if (mDepth == 0) { // prevent reentrents functions
+    //assert((mStartTime.tv_usec == 0) && (mStartTime.tv_usec ==0));
+    mStartTime = mNowTime; //TODO check if copied
+    mStopTime.tv_sec = mStopTime.tv_usec = 0;
+  }
+#else
+# warning "TODO"
+#endif
+  mRatio = mCumulated / (float) mElapsed;
+  if (verbose) {
+    std::cout << " ["
        << std::fixed << std::setprecision(2)
          << std::setfill('0') << std::setw(6)
-         << mRatio * 100.f<< "%"
+         << mRatio * 100.f<< "%" << "*"<<mDepth
          << "+?"<<((mCount)?mCumulated/mCount:0)<<"*"<<mCount
          << "/"<<mElapsed << "us"
          <<"]"
       ;
   }
+  mDepth++;
   mCount++;
-      //printf(" [~%lds ~= %ldus]", mStartTime.tv_sec, mStartTime.tv_usec);
-#endif
 }
 
 template <typename T>
-void Duration<T>::stop(bool verbose)
+void trako::Duration<T>::stop(bool verbose)
 {
-  assert(!mValue);
+  if (verbose) {
+    if (mName) {
+      //print(mName);
+    } else {
+      //print(mPrefix);
+    }
+  }
+
 #ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
-  assert(mStartTime.tv_sec | mStopTime.tv_usec == 0);
   mStopTime = getTime();
-  mValue = (1000000L * (mStopTime.tv_sec - mStartTime.tv_sec)
-               + (mStopTime.tv_usec - mStartTime.tv_usec) );
-  mStartTime.tv_sec = mStartTime.tv_usec = 0;
-  mCumulated += mValue;
+
+  mValue = timeToDuration(diffTime(mStartTime, mNowTime));
+  if (mDepth==1) { // only add for first one before re-entrace
+    mCumulated += mValue;
+  }
+
   mRatio = mCumulated / (float) mElapsed;
   if (mValue > mMaximum) { mMaximum = mValue; }
   if (mValue < mMinimum) { mMinimum = mValue; }
 
   if (verbose) {
-    cout<<" ["
+    std::cout<<" ["
       << std::fixed << std::setprecision(2)
       << std::setfill('0') << std::setw(6) 
-        << mRatio * 100.f  << "%+="
-        << mValue << "us=" << mCumulated << "us]"
+      << mRatio * 100.f << "% *" << mDepth
+      << "+=" << mValue << "us=" << mCumulated << "us~/"
+      << mCount  << "]"
       ;
   }
+  mDepth--;
 #endif
 
   if (verbose ) {
@@ -158,41 +217,57 @@ void Duration<T>::stop(bool verbose)
 }
 
 template <typename T>
-void Duration<T>::printStats(char const * const prefix)
+void trako::Duration<T>::printStats(char const * const prefix, bool verbose)
 {
-  unsigned int total = 0;
-  static unsigned long prevDuration = 0;
+  if (!verbose) return;
+#ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
+  getTime(); // to update probe since last time
+#endif
+  unsigned long probe = mElapsed;
+  std::cout << std::endl << prefix
+    << std::fixed << std::setprecision(2) << std::setfill('0') << std::setw(6)
+    << 100.f * probe / mElapsed
+    << "% <#stats> [+~" << probe / 1000000L
+    << "s~=+" <<probe << "us=" << mElapsed
+    <<"/" << mCollection.size()
+    <<"*?]"
+    <<std::endl;
 
   for_each(mCollection.begin(), mCollection.end(),
-           [prefix, &total](const std::pair<char const * const, Duration> &item) {
-             total += item.second.mCumulated;
-           });
-#ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
-  getTime();
-#endif
-  unsigned long probe = (mElapsed - prevDuration);
-  cout<<prefix
-      << std::fixed << std::setprecision(2) << std::setfill('0') << std::setw(6)
-      << 100.f * probe / mElapsed
-      << "% <#stats> [+~" << probe / 1000000L
-      << "s~=+" <<probe << "ms=" << mElapsed << "]"<<endl;
-  prevDuration = mElapsed;
-  typedef std::function<bool(std::pair<char const * const, Duration<T>>,
-                             std::pair<char const * const, Duration<T>>)> Comparator;
+           [prefix](std::pair<char const * const, Duration<>> &item) {
+             // item.second.print(); // TODO
+             item.second.mRatio = (float) item.second.mCumulated / mElapsed;
+           }
+    );
 
+  std::cout<<prefix
+           <<"stats: sort: "<<mCollection.size() << std::endl << std::endl;
+
+  typedef std::function<bool(std::pair<char const * const, Duration<> >,
+                             std::pair<char const * const, Duration<> >)> Comparator;
   Comparator compFunctor
-    = [](std::pair<char const * const, Duration<T>> before,
-         std::pair<char const * const, Duration<T>> after) {
-        before.second.mRatio = (float) before.second.mCumulated / mElapsed;
-        after.second.mRatio = (float) after.second.mCumulated / mElapsed;
+    = [](std::pair<char const * const, Duration<> > before,
+         std::pair<char const * const, Duration<> > after) {
         return (before.second.mRatio < after.second.mRatio);
       };
-
-  std::set<std::pair<char const * const, Duration<T>>, Comparator> sortedCollectionSet
-  (mCollection.begin(), mCollection.end(), compFunctor);
-  for (std::pair<char const * const, Duration<T>> item : sortedCollectionSet) {
-    item.second.print(prefix);
+  std::set<std::pair<char const * const, Duration<> >, Comparator> sortedCollectionSet
+    (mCollection.begin(), mCollection.end(), compFunctor);
+  for (std::pair<char const * const, Duration<> > item : sortedCollectionSet) {
+    item.second.print(0, verbose);
   }
+
+  std::cout
+    << std::endl<<prefix
+    << std::fixed << std::setprecision(2) << std::setfill('0') << std::setw(6)
+    << 100.f
+    << "% <#DurationStats> [+~" << mElapsed / 1000000L
+    << "s~=+" <<mElapsed << "us"
+    << "/" << mCollection.size()
+    << "]"
+    <<std::endl;
+
+
+  std::cout<<std::endl;
 }
 
 #endif // _h_

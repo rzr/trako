@@ -12,7 +12,6 @@ namespace trako {
 };
 // ### meta objects ###
 #include "MetaClass.h"
-#include "MetaScope.h"
 #include "MetaMutex.h"
 #include "Context.h"
 #include "macros.h"
@@ -35,14 +34,16 @@ namespace trako {
   //}
 
 /// macro to inject a trako's meta object into the user's function
-#  define TRAKO_FUNCT()						\
-  trako::MetaScope<> lmeta(PRETTY_FUNCTION, FILE_LINE)  /*<! TrakO */	\
+#  define TRAKO_FUNCT_1(verbose)						\
+  trako::MetaClass<> lTrakoMetaFunct_(TRAKO_TAG("FUNCT: "), PRETTY_FUNCTION, verbose)  /*<! TrakO */ \
   //}
+#  define TRAKO_FUNCT()	\
+  TRAKO_FUNCT_1(true)
 
 /// macro to inject a trako's meta object into user's scope 
 /// @param name : cstring to locate context
 #  define TRAKO_SCOPE(name)				\
-  trako::MetaScope<> lmeta(name , FILE_LINE) /*<! TrakO */	\
+  trako::MetaClass<> lTrakoMetaScope_(TRAKO_TAG("SCOPE: "), name "@" FILE_LINE)  /*<! TrakO */ 
   //}
 
 // ### tracing helper ###

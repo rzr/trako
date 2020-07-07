@@ -12,32 +12,41 @@
 # warning "TODO: port to use std::chrono"
 #endif
 #include <map>
-using namespace std;
+
+
+namespace trako {
 
 template<typename T=void>
 class Duration
 {
 public:
-  static void printStats(char const * const prefix=0);
-  static Duration<T>& get(char const * const name=0);
-  Duration(bool verbose=false);
+  static void printStats(char const * const prefix=0, bool verbose=true);
+  static Duration<>& get(char const * const prefix, char const * const name=0);
+  Duration(char const * const prefix=0, char const * const name=0,
+           bool verbose=false);
 public:
-  void print(char const * const prefix=0) const;
+  void print(char const * const prefix=0, bool verbose=true,
+             char const * const suffix="\n") const;
   void start(bool verbose=false);
   void stop(bool verbose=false);
 protected:
+  char const * mPrefix; ///< Id context used as map's key
   char const * mName;
   unsigned int mCount;
+  unsigned int mDepth; ///< handle Rentrants functions (TODO improve w/ counter)
   bool mProfile;
   bool mVerbose;
   unsigned long mValue; /*!< Observed time, once stop is called */
-  unsigned long mCumulated;
-  unsigned long mMaximum;
-  unsigned long mMinimum;
+  unsigned long mCumulated; ///< total time spend in function
+  unsigned long mMaximum; ///< unused yet
+  unsigned long mMinimum; ///< use counter TODO
   float mRatio;
 #ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
 public:
   static timeval getTime();
+  static unsigned long timeToDuration(timeval time);
+  static timeval diffTime(timeval before, timeval after);
+  static unsigned long getDuration();
   static unsigned long getElapsed();
 protected:
   static unsigned long mElapsed; /*!< Current time updated by getTime */
@@ -47,7 +56,8 @@ protected:
   timeval mStopTime;
 #endif
 protected:
-  static std::map<char const * const, Duration> mCollection;
+  static std::map<char const * const, Duration<>> mCollection;
+};
 };
 
 #include "Duration.hpp"
