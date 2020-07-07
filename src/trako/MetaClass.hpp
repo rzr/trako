@@ -1,3 +1,4 @@
+// -*- mode: C++; c-basic-offset: 2; indent-tabs-mode: nil -*-
 /* #ident "$Id:$"
  * @author: Philippe Coval <rzr@users.sf.net> -- Rev: $Author: rzr $
  * Copyright: LGPL-3 (See README file that comes with this distribution)
@@ -38,7 +39,7 @@ trako::MetaClass<T>::MetaClass(char const * const prefix,
     if (!mShared ) { //tricky part here
       mShared = this; //prevent loop
       mShared = new MetaClass<T>;
-      Context<>::mList.push_back( mShared );
+      Context<>::getInstance().mClassCollection.push_back( mShared );
     } else { //this part will be executed by new mShared on 1st
       mCounter.add();
     }

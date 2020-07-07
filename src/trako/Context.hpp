@@ -10,54 +10,65 @@
 #include <iostream>
 
 #include "Context.h"
-#include "MetaClass.h"
 #include "Duration.h"
+#include "MetaClass.h"
+
 #include "macros.h"
 
-using namespace std;
-using namespace trako;
-
 template<typename T>
-std::list<MetaClassInterface const *> Context<T>::mList;
-
-
-template<typename T>
-Context<T> Context<T>::mSelf;
-
-
-template<typename T>
-Context<T>::Context()
+trako::Context<>& trako::Context<T>::getInstance()
 {
-  print(TRAKO_TAG("start: "), true);
+  static Context<T> mSelf;
+  return mSelf;
+}
+
+template<typename T>
+trako::Context<T>::Context()
+{
+  std::cout<<TRAKO_TAG("init: {}")<<std::endl;
 }
 
 
 template<typename T>
-Context<T>::~Context()
+trako::Context<T>::~Context()
 {
-  print(TRAKO_TAG("stop: "), true);
+  std::cout<<TRAKO_TAG("term: {")<<std::endl;
+  print(TRAKO_TAG("term: "), true);
+  printDurationStats(TRAKO_TAG("term: "), true);
+  std::cout<<TRAKO_TAG("term: }")<<std::endl;
+}
+
+template<typename T>
+std::list<trako::MetaClassInterface const *>& trako::Context<T>::getClassCollection()
+{
+  std::list<trako::MetaClassInterface const *>* pInstance = NULL;
+  if (!pInstance) pInstance = new std::list<trako::MetaClassInterface const *>;
+  return *pInstance;
+}
+
+template<typename T>
+std::map<char const * const, trako::Duration<> >& trako::Context<T>::getDurationCollection()
+{
+  return Duration<>::mCollection;
 }
 
 
 template<typename T>
-void Context<T>::print(char const * const context, bool force)
+void trako::Context<T>::print(char const * const context, bool force)
 {
-  list<MetaClassInterface const *>::const_iterator it;
-  
-  for( it = mList.begin();
-       it != mList.end() ;
-       ++it) {
-    MetaClassInterface const * const p = *it;
-    if ( p ) p->print(context, force);
+  std::list<trako::MetaClassInterface const *>::const_iterator it;
+
+  for( it = mClassCollection.begin(); it != mClassCollection.end() ; ++it) {
+    trako::MetaClassInterface const * const p = *it;
+    if (p) p->print(context, force);
   }
 }
 
+
 template<typename T>
-void Context<T>::printDurationStats(char const * const prefix)
+void trako::Context<T>::printDurationStats(char const * const prefix, bool verbose)
 {
-  Duration<>::printStats(prefix);
+  trako::Duration<>::printStats(prefix, verbose);
 }
 
-
 #endif
-
