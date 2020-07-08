@@ -11,7 +11,7 @@
 // if you want to reuse it then just #include <trako/config.h>
 
 #define PACKAGE "trako"
-#define VERSION "0.0.0"
+#define VERSION "0.1.0"
 
 //----------------------------------------------------------------------------
 
