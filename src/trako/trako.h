@@ -50,15 +50,15 @@ class MetaClassInterface;
 
 /// trace all stats of all tracked class
 #  define TRAKO_COUNT()			\
-  Context::printAll( TAG("trace: ") )
+  Context::printAll(TRAKO_TAG("trace: "))
 
 /// trace changed stats of all tracked class since previous trace
 #  define TRAKO_DIFF()			\
-  Context::printDiff( TAG("trace: ") )
+  Context::printDiff(TRAKO_TAG("trace: "))
 
 /// trace stats of the tracked class from tracked typename
 #  define TRAKO_TYPE( type )			\
-  CounterOf<type>::print(true, TAG("type: ") )
+  CounterOf<type>::print(true, TRAKO_TAG("type: "))
 
 /// trace stats of the tracked class from tracked object
 #if 0

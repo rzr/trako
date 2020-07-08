@@ -30,8 +30,8 @@
   __FILE__ ":" STR(__LINE__)": "
 
 /// context 
-#define TAG(message)                            \
-  "" FILE_LINE message
+#define TRAKO_TAG(message)                      \
+  "" FILE_LINE TRAKO_PACKAGE ": " message
 
 #endif //_h_
 

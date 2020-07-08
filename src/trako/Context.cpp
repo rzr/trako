@@ -22,18 +22,13 @@ Context Context::mSelf;
 
 Context::Context()
 {
-  cout
-    <<"trako.h:0: info: " 
-    <<PACKAGE<< "-" << VERSION
-    <<"program is beeing profiled"<<endl;
+  print(TRAKO_TAG("start: "), true);
 }
 
 
 Context::~Context()
 {
-  cout<<"trako.h:0: info: {"<<endl;
-  print(TAG("quit: "), true);
-  cout<<"trako.h:0: info: }"<<endl;
+  print(TRAKO_TAG("stop: "), true);
 }
 
 
