@@ -5,12 +5,7 @@
 #ifndef TrakoLib_h_
 #define TrakoLib_h_
 
-namespace trako {};
-
-namespace trako {
-  class MetaClassInterface;
-};
-
+// Backup used macros if defined
 #ifdef CLASS
 #  define TRAKO_BACKUP_CLASS CLASS
 #endif
@@ -20,6 +15,13 @@ namespace trako {
 #ifdef SCOPE
 #  define TRAKO_BACKUP_SCOP SCOPE
 #endif
+
+
+namespace trako {};
+
+namespace trako {
+  class MetaClassInterface;
+};
 
 // ### meta objects ###
 #include "MetaClass.h"
@@ -100,17 +102,24 @@ namespace trako {
   TRAKO_TYPE( void*)
 #endif
 
-#define TRAKO_MACRO_CLASS
+// Restore used macros if defined
+#define TRAKO_MACRO_CLASS CLASS
 #undef CLASS
-#define CLASS TRAKO_BACKUP_CLASS
+#ifdef TRAKO_BACKUP_CLASS
+#  define CLASS TRAKO_BACKUP_CLASS
+#endif
 
 #define TRAKO_MACRO_FUNCT FUNCT
 #undef FUNCT
-#define FUNCT TRAKO_BACKUP_FUNCT
+#ifdef TRAKO_BACKUP_FUNCT
+#  define FUNCT TRAKO_BACKUP_FUNCT
+#endif
 
-#define TRAKO_MACRO_FUNCT SCOPE
+#define TRAKO_MACRO_SCOPE SCOPE
 #undef SCOPE
-#define SCOPE SCOPE
+#ifdef TRAKO_BACKUP_SCOPE
+#  define SCOPE TRAKO_BACKUP_SCOPE
+#endif
 
 
 #endif
