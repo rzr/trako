@@ -146,8 +146,13 @@ rule/test/flag/TRAKO_CONFIG: distclean
 	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
   | grep '^# Quitting$$'
 	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
-| grep 'src/main.cpp' | grep ': } int main(' \
-  || echo "TODO: may static objects destruction investigated"
+| grep 'src/main.cpp' | grep ': } int main('
+	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
+| grep '^trako: term: }#'
+	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
+| grep '<#stats>'
+	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
+| grep '<#DurationStats>'
 	@echo "# log: success: $@"
 
 rule/test/flag/TRAKO_CONFIG_LIB: distclean
