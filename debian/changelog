@@ -1,3 +1,9 @@
+trako (0.2.0-0) UNRELEASED; urgency=medium
+
+  * Release 0.2.0
+
+ -- Philippe Coval <rzr@users.sf.net>  Thu, 09 Jul 2020 15:43:39 +0200
+
 trako (0.1.0-0) unstable; urgency=low
 
   * Initial release
