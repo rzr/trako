@@ -8,6 +8,7 @@
 
 #define TRAKO_PACKAGE "trako"
 #define TRAKO_VERSION "0.1.0"
+#define TRAKO_URL "https://purl.org/rzr/trako"
 
 /// msvc workaround
 #ifdef _MSC_VER
