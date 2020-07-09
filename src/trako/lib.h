@@ -17,11 +17,11 @@
 #endif
 
 
-namespace trako {};
+namespace trako {}
 
 namespace trako {
   class MetaClassInterface;
-};
+}
 
 // ### meta objects ###
 #include "MetaClass.h"
@@ -41,12 +41,13 @@ namespace trako {
 
 /// macro to inject a trako's meta object into the user's class
 #  define TRAKO_CLASS(type)                                             \
-  private: trako::MetaClass<type> mTrakoMetaClass_      /*<! TrakO */   \
+  private: trako::MetaClass<type> mTrakoMetaClass_{}      /*<! TrakO */ \
   //}
 
 /// macro to inject a trako's meta object into the user's function
 #  define TRAKO_FUNCT_1(verbose)                                        \
-  trako::MetaClass<> lTrakoMetaFunct_(TRAKO_TAG("FUNCT: "), PRETTY_FUNCTION, verbose)  /*<! TrakO */ \
+  trako::MetaClass<> lTrakoMetaFunct_(TRAKO_TAG("FUNCT: "),             \
+                                      PRETTY_FUNCTION, verbose)  /*<! TrakO */ \
   //}
 #  define TRAKO_FUNCT_VERBOSE()                 \
   TRAKO_FUNCT_1(true)

@@ -24,9 +24,10 @@ CounterOf< trako::MetaClass<T> > trako::MetaClass<T>::mDepthCounter;
 template<typename T>
 trako::MetaClass<T>::MetaClass(char const * const prefix,
                                char const * const name,
-                               bool verbose, bool profile
-  )
-  : mPrefix(prefix), mName(name), mVerbose(verbose), mProfile(profile)
+                               bool verbose, bool profile)
+  : MetaClassInterface(),
+    mPrefix(prefix), mName(name), mFunct(), mVerbose(verbose), mProfile(profile),
+    mDuration{}
 {
   Context<>::getInstance(); // Init
   if (!name) {

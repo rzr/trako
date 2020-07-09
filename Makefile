@@ -23,6 +23,7 @@ target?=${main_exe}
 log?=${target}.log.txt.tmp
 
 CXXFLAGS+=-Isrc
+CXXFLAGS+=-Wall -Werror -Wpedantic
 
 install_header_dir?=${DESTDIR}/usr/include/${package}
 install_lib_dir?=${DESTDIR}/usr/lib/

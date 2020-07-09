@@ -53,6 +53,10 @@ class MetaClass : public MetaClassInterface
                     char const * const suffix="") const;
 
   protected:
+  MetaClass(const MetaClass<T>&) = delete;
+  MetaClass operator=(const MetaClass<T>&) = delete;
+
+  protected:
   char const* mPrefix; ///< context's message's is used as id
   char const * mName;  ///< pretty name
   bool mFunct; ///< Execution Context for functions not classes
@@ -63,7 +67,7 @@ class MetaClass : public MetaClassInterface
   static CounterOf<T> mCounter; ///< instances counter smart
   static CounterOf< MetaClass<T> > mDepthCounter; ///< for functs
   };
-};
+}
 
 # include "MetaClass.hpp"
 

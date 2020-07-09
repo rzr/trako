@@ -11,7 +11,7 @@
 
 namespace trako {  
   class MetaClassInterface;
-};
+}
 #include "Duration.h"
 
 namespace trako {
@@ -50,6 +50,6 @@ public:
 public:  
   virtual ~Context();
 };
-};
+}
 #include "Context.hpp"
 #endif

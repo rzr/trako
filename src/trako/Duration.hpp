@@ -49,11 +49,8 @@ std::map<char const * const, trako::Duration<> > trako::Duration<T>::mCollection
 template <typename T>
 trako::Duration<T>::Duration(char const * const prefix,
                              char const * const name,  bool verbose)
-  : mPrefix{prefix},
-    mName{name}, mCount{}, mVerbose{verbose},
-    mValue{}, mCumulated{} , mRatio{}, mDepth{},
-    mProfile(true),
-    mMaximum{}, mMinimum{}
+  : mPrefix{prefix}, mName{name}, mCount{}, mDepth{}, mProfile(true), mVerbose{verbose},
+    mValue{}, mCumulated{}, mMaximum{}, mMinimum{}, mRatio{}
 #ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
   , mStartTime{}, mStopTime{}
 #endif
