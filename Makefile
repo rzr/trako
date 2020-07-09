@@ -20,6 +20,7 @@ libs?=
 main_src?=src/main.cpp
 main_exe?=${main_src:.cpp=}
 target?=${main_exe}
+log?=${target}.log.txt.tmp
 
 CXXFLAGS+=-Isrc
 
@@ -53,8 +54,11 @@ run: ${target}
 %.log.txt.tmp: %
 	${exec} ${<D}/${<F} | tee $@ ; echo status=$$?
 
-update: main.log.txt ${target}.log.txt.tmp
-	cp -av ${target}.log.txt.tmp  $<
+log: ${log}
+	cat ${log}
+
+update: main.log.txt ${log}
+	cp -av ${log}  $<
 	-git diff --exit-code || git difftool $<
 
 
@@ -139,21 +143,34 @@ rule/test/flag/boolean/%:
 	${MAKE} ${@D}/1/${@F}
 	@echo "# log: success: $@"
 
+check: ${target}
+	${MAKE} run > ${log}
+	cat ${log} | grep '^trako: init: }'
+	cat ${log} | grep ' trako: FUNCT: } int main('
+	cat ${log} | grep 'trako: FUNCT: }'
+	cat ${log} | grep 'trako: SCOPE: }'
+	cat ${log} | grep 'trako: FUNCT/STATS: '
+	cat ${log} | grep 'trako: CLASS'
+	cat ${log} | grep 'trako: CLASS/STATS: '
+	cat ${log} | grep 'trako: CLASS/DIFF: '
+	cat ${log} | grep 'trako: CLASS/TYPE: '
+	cat ${log} | grep 'trako: STATS: '
+	cat ${log} | grep -e 'trako: FUNCT/STATS: .*% <int main(int, char\*\*)>'
+	cat ${log} | grep -v '?' | grep -e 'trako: FUNCT/STATS: .*% <int main(int, char\*\*)>'
+	cat ${log} | grep 'trako: term: }'
+	@echo "# log: success: $@"
+
+devel: distclean
+	make check > /dev/null || make log
+	@echo "# log: Safe check"
+	make check log
+	@echo "# log: success: $@"
+
 rule/test/flag/TRAKO_CONFIG: distclean
 	@echo "# log: try: $@"
 	${MAKE} ${@D}/boolean/0/${@F} TRAKO_CONFIG_WARNING=1 2>&1 | grep 'trako: disabled'
 	${MAKE} ${@D}/boolean/1/${@F} TRAKO_CONFIG_WARNING=1 2>&1 | grep 'trako: enabled'
-	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
-  | grep '^# Quitting$$'
-	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
-| grep 'src/main.cpp' | grep ': } int main('
-	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
-| grep '^trako: term: }#'
-	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
-| grep '<#stats>'
-	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
-| grep '<#DurationStats>'
-	@echo "# log: success: $@"
+	${MAKE} ${@D}/boolean/1/${@F}
 
 rule/test/flag/TRAKO_CONFIG_LIB: distclean
 	@echo "# log: try: $@"
@@ -169,6 +186,7 @@ rule/test/flag/TRAKO_CONFIG_WARNING: distclean
 
 tests: distclean
 	@echo "# log: try: $@"
+	${MAKE} distclean check
 	${MAKE} rule/test/flag/TRAKO_CONFIG
 	${MAKE} rule/test/flag/TRAKO_CONFIG_LIB
 	${MAKE} rule/test/flag/TRAKO_CONFIG_WARNING

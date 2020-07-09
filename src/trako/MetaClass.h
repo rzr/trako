@@ -18,10 +18,10 @@ class MetaClassInterface
   ///@return typename
   virtual char const * getName() const=0;
 
-  ///@param force : display even if did not changed since previous call
-  virtual int print(char const * const prefix=0, bool verbose=true) const {
-    return 0;
-  }
+  ///@param verbose : display even if did not changed since previous call
+  virtual int print(bool verbose=true,
+                    char const * const prefix=0,
+                    char const * const suffix="") const { return 0; }
   virtual ~MetaClassInterface(){}
 };
 
@@ -31,12 +31,14 @@ class MetaClassInterface
 template<typename T = void>
 class MetaClass : public MetaClassInterface
 {
-  public: 
-  static int printStats(char const * const prefix=0, bool verbose=true);
+  public:
+  static int printStats(bool verbose=true,
+                        char const * const prefix=0,
+                        char const * const suffix="");
 
   MetaClass(char const * const prefix=0, char const * const name=0,
-    bool verbose=true, bool profile=true);
-
+            bool verbose=true, bool profile=true);
+  
   virtual ~MetaClass();
 
   /// @return typename of owner class
@@ -45,8 +47,10 @@ class MetaClass : public MetaClassInterface
     return mName;
   }
 
-  ///@param force : display even if did not changed since previous call  
-  virtual int print(char const * const prefix=0, bool force=true) const;
+  ///@param force : display even if did not changed since previous call
+  virtual int print(bool force=true,
+                    char const * const prefix=0,
+                    char const * const suffix="") const;
 
   protected:
   char const* mPrefix; ///< context's message's is used as id

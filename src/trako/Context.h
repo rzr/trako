@@ -23,23 +23,20 @@ public:
   static Context<>& getInstance();
 
 //private:
+    void print(bool verbose=true,
+               char const * const prefix=0, char const* const suffix="") {
+      printClass(verbose, prefix, suffix);
+      printFunct(verbose, prefix, suffix);
+    }
 
-  ///@param prefix : used to put context in verbose output
-  void printStats(char const * const prefix=0) {
-    print(prefix, true);
-  }
+    ///@param verbose : all class type else only changed
+    void printClass(bool verbose=true,
+                    char const * const prefix=0,
+                    char const * const suffix="");
 
-  ///@param prefix : used to put context in verbose output
-  void printDiff(char const * const prefix=0) {
-    print(prefix, false);
-  }
-
-  void printDurationStats(char const * const prefix=0, bool verbose = true);
-
-// protected:
-
-  ///@param force : all class type else only changed
-  void print(char const * const context=0, bool force=false);
+    void printFunct(bool verbose=true,
+                    char const * const prefix=0,
+                    char const * const suffix="");
 
  public:
   std::list<MetaClassInterface const *>& getClassCollection();
