@@ -7,6 +7,8 @@ package?=trako
 # TRAKO_CONFIG?=0
 # Alternatively "libtrako" can be created instead of inlined template
 # TRAKO_CONFIG_LIB?=1
+# Disabled internaly, but enabled for clients in trako.h
+TRAKO_CONFIG_WARNING?=0
 
 export V?=1
 
@@ -36,6 +38,11 @@ CXXFLAGS+=-DCONFIG_TRAKO_LIB=${TRAKO_CONFIG_LIB}
 libs+=${lib}
 endif
 
+ifdef TRAKO_CONFIG_WARNING
+export TRAKO_CONFIG_WARNING
+CXXFLAGS+=-DTRAKO_CONFIG_WARNING=${TRAKO_CONFIG_WARNING}
+libs+=${lib}
+endif
 
 all: COPYING ${lib} ${target}
 	ls $^
@@ -134,8 +141,8 @@ rule/test/flag/boolean/%:
 
 rule/test/flag/TRAKO_CONFIG: distclean
 	@echo "# log: try: $@"
-	${MAKE} ${@D}/boolean/0/${@F} 2>&1 | grep 'trako: disabled'
-	${MAKE} ${@D}/boolean/1/${@F} 2>&1 | grep 'trako: enabled'
+	${MAKE} ${@D}/boolean/0/${@F} TRAKO_CONFIG_WARNING=1 2>&1 | grep 'trako: disabled'
+	${MAKE} ${@D}/boolean/1/${@F} TRAKO_CONFIG_WARNING=1 2>&1 | grep 'trako: enabled'
 	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
   | grep '^# Quitting$$'
 	${MAKE} ${@D}/boolean/1/${@F} 2>&1 \
@@ -148,10 +155,18 @@ rule/test/flag/TRAKO_CONFIG_LIB: distclean
 	${MAKE} ${@D}/boolean/TRAKO_CONFIG_LIB
 	@echo "# log: success: $@"
 
+rule/test/flag/TRAKO_CONFIG_WARNING: distclean
+	${MAKE} ${@D}/boolean/1/${@F} \
+  2>&1 | grep "warning \"trako: enabled: "
+	${MAKE} ${@D}/boolean/0/${@F} \
+  2>&1 | grep "warning \"trako: " \
+  && exit 1 || echo "# log: success: $@"
+
 tests: distclean
 	@echo "# log: try: $@"
 	${MAKE} rule/test/flag/TRAKO_CONFIG
 	${MAKE} rule/test/flag/TRAKO_CONFIG_LIB
+	${MAKE} rule/test/flag/TRAKO_CONFIG_WARNING
 	-git status
 	@echo "# log: success: $@"
 #eof

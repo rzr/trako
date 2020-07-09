@@ -10,6 +10,17 @@ namespace trako {};
 namespace trako {
   class MetaClassInterface;
 };
+
+#ifdef CLASS
+#  define TRAKO_BACKUP_CLASS CLASS
+#endif
+#ifdef FUNCT
+#  define TRAKO_BACKUP_FUNCT FUNCT
+#endif
+#ifdef SCOPE
+#  define TRAKO_BACKUP_SCOP SCOPE
+#endif
+
 // ### meta objects ###
 #include "MetaClass.h"
 #include "MetaMutex.h"
@@ -89,6 +100,17 @@ namespace trako {
   TRAKO_TYPE( void*)
 #endif
 
+#define TRAKO_MACRO_CLASS
+#undef CLASS
+#define CLASS TRAKO_BACKUP_CLASS
+
+#define TRAKO_MACRO_FUNCT FUNCT
+#undef FUNCT
+#define FUNCT TRAKO_BACKUP_FUNCT
+
+#define TRAKO_MACRO_FUNCT SCOPE
+#undef SCOPE
+#define SCOPE SCOPE
 
 
 #endif
