@@ -61,7 +61,7 @@ Features :
 In your project directory or system dirs (ie: /usr/local/include/trako)
 
 ```sh
-git clone --depth 1 https://github.com/rzr/trako --branch "master"
+git clone --depth 1 https://github.com/rzr/trako --branch "0.2.0"
 # Optionally build and run the example program, to profile execution.
 make -C trako run
 ```
