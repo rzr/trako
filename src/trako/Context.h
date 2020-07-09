@@ -9,20 +9,20 @@
 #include <list>
 #include <map>
 
-namespace trako {  
+namespace trako {
   class MetaClassInterface;
 }
 #include "Duration.h"
 
 namespace trako {
-  
-template <typename T=void>
-class Context
-{
-public:
-  static Context<>& getInstance();
 
-//private:
+  template <typename T=void>
+  class Context
+  {
+  public:
+    static Context<>& getInstance();
+
+    //private:
     void print(bool verbose=true,
                char const * const prefix=0, char const* const suffix="") {
       printClass(verbose, prefix, suffix);
@@ -38,18 +38,18 @@ public:
                     char const * const prefix=0,
                     char const * const suffix="");
 
- public:
-  std::list<MetaClassInterface const *>& getClassCollection();
-  std::map<char const * const, Duration<> >& getDurationCollection();
+  public:
+    std::list<MetaClassInterface const *>& getClassCollection();
+    std::map<char const * const, Duration<> >& getDurationCollection();
 
-  ///@param mList : stack on tracked class
-  std::list<MetaClassInterface const *> mClassCollection;
+    ///@param mList : stack on tracked class
+    std::list<MetaClassInterface const *> mClassCollection;
 
- private:
-  Context();
-public:  
-  virtual ~Context();
-};
+  private:
+    Context();
+  public:
+    virtual ~Context();
+  };
 }
 #include "Context.hpp"
 #endif

@@ -6,7 +6,7 @@
 #ifndef config_h_
 #define config_h_ __FILE__
 
-// This file should not be included in headers files (.h) 
+// This file should not be included in headers files (.h)
 // but it's safe to include it on 1st line of implementation files
 // if you want to reuse it then just #include <trako/config.h>
 

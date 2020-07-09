@@ -37,4 +37,3 @@
 #ifndef CONFIG_SUPPORT_API_C_STDIO_H_NO
 # include <stdio.h>
 #endif
-

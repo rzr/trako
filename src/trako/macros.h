@@ -17,11 +17,11 @@
 # define PRETTY_FUNCTION  __PRETTY_FUNCTION__
 
 /// @return text
-#define STR_(symbol)				\
+#define STR_(symbol)                            \
   #symbol
 
 /// @return text (safer)
-#define STR(symbol)				\
+#define STR(symbol)                             \
   STR_(symbol)
 
 /// convert to text safer
@@ -32,10 +32,8 @@
 #define FILE_LINE                               \
   __FILE__ ":" STR(__LINE__)": "
 
-/// context 
+/// context
 #define TRAKO_TAG(message)                      \
   "" FILE_LINE TRAKO_PACKAGE ": " message
 
 #endif //_h_
-
-

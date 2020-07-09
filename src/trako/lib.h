@@ -36,7 +36,7 @@ namespace trako {
 #  define TRAKO_1(CMD)                          \
   TRAKO(CMD)()
 
-#  define TRAKO_2(CMD, a)                        \
+#  define TRAKO_2(CMD, a)                       \
   TRAKO(CMD)(a)
 
 /// macro to inject a trako's meta object into the user's class
@@ -74,7 +74,7 @@ namespace trako {
 
 /// trace all stats of all tracked class
 /// trace changed stats of all tracked class since previous trace
-#  define TRAKO_CLASS_DIFF()                                                  \
+#  define TRAKO_CLASS_DIFF()                                            \
   trako::Context<>::getInstance().printClass(false, TRAKO_TAG("CLASS/DIFF: "));
 
 #  define TRAKO_FUNCT_STATS()                                           \
@@ -83,10 +83,10 @@ namespace trako {
 #  define TRAKO_CLASS_STATS()                                           \
   trako::Context<>::getInstance().printClass(true, TRAKO_TAG("CLASS/STATS: "));
 
-#  define TRAKO_STATS()                                           \
+#  define TRAKO_STATS()                                                 \
   trako::Context<>::getInstance().print(true, TRAKO_TAG("STATS: "));
 
-#  define TRAKO_TYPE_STATS(type)               \
+#  define TRAKO_TYPE_STATS(type)                \
   TRAKO_ #type _STATS
 
 /// trace stats of the tracked class from tracked typename

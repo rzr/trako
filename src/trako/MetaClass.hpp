@@ -53,7 +53,7 @@ trako::MetaClass<T>::MetaClass(char const * const prefix,
     if (mProfile) {
       mDuration = &Duration<>::get(mPrefix, mName);
       mDuration->start(mVerbose);
-      }
+    }
     if (mVerbose) {
       std::cout<<std::endl;
     }

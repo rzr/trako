@@ -13,17 +13,17 @@
 
 namespace trako {
 
-template<typename T=void>
-class MetaMutex
-{
-public: 
-  MetaMutex();
-  virtual ~MetaMutex();
-private:
+  template<typename T=void>
+  class MetaMutex
+  {
+  public:
+    MetaMutex();
+    virtual ~MetaMutex();
+  private:
 #ifndef CONFIG_SUPPORT_API_PTHREAD_NO
-  static pthread_mutex_t mMutex;
+    static pthread_mutex_t mMutex;
 #endif
-};
+  };
 }
 
 # include "MetaMutex.hpp"

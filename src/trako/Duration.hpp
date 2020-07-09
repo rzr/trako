@@ -93,14 +93,14 @@ void trako::Duration<T>::print(bool verbose,
     std::cout << "???.??%";
   } else {
     std::cout << std::fixed << std::setprecision(2)
-         << std::setfill('0') << std::setw(6)
-         << mCumulated * 100.f / elapsed << "%";
+              << std::setfill('0') << std::setw(6)
+              << mCumulated * 100.f / elapsed << "%";
   }
   std::cout << " <" << mName << "> [~"
-      << mCumulated / count / 1000000L << "s="
-      << mCumulated / count << "us"
-      << "*" << count << "~=" << elapsed << "us" << "]" 
-      << suffix << std::endl;
+            << mCumulated / count / 1000000L << "s="
+            << mCumulated / count << "us"
+            << "*" << count << "~=" << elapsed << "us" << "]"
+            << suffix << std::endl;
 }
 
 
@@ -162,12 +162,12 @@ void trako::Duration<T>::start(bool verbose)
   mRatio = mCumulated / (float) mElapsed;
   if (verbose) {
     std::cout << " ["
-       << std::fixed << std::setprecision(2)
-         << std::setfill('0') << std::setw(6)
-         << mRatio * 100.f<< "%" << "*"<<mDepth
-         << "+?"<<((mCount)?mCumulated/mCount:0)<<"*"<<mCount
-         << "/"<<mElapsed << "us"
-         <<"]"
+              << std::fixed << std::setprecision(2)
+              << std::setfill('0') << std::setw(6)
+              << mRatio * 100.f<< "%" << "*"<<mDepth
+              << "+?"<<((mCount)?mCumulated/mCount:0)<<"*"<<mCount
+              << "/"<<mElapsed << "us"
+              <<"]"
       ;
   }
   mDepth++;
@@ -199,11 +199,11 @@ void trako::Duration<T>::stop(bool verbose)
 
   if (verbose) {
     std::cout<<" ["
-      << std::fixed << std::setprecision(2)
-      << std::setfill('0') << std::setw(6) 
-      << mRatio * 100.f << "% *" << mDepth
-      << "+=" << mValue << "us=" << mCumulated << "us~/"
-      << mCount  << "]"
+             << std::fixed << std::setprecision(2)
+             << std::setfill('0') << std::setw(6)
+             << mRatio * 100.f << "% *" << mDepth
+             << "+=" << mValue << "us=" << mCumulated << "us~/"
+             << mCount  << "]"
       ;
   }
   mDepth--;
@@ -226,21 +226,21 @@ void trako::Duration<T>::printStats(bool verbose,
 #endif
   unsigned long probe = mElapsed;
   std::cout << std::endl << prefix
-    << std::fixed << std::setprecision(2) << std::setfill('0') << std::setw(6)
-    << 100.f * probe / mElapsed
-    << "% <FUNCT/STATS> [+~" << probe / 1000000L
-    << "s~=+" <<probe << "us=" << mElapsed
-    <<"/" << mCollection.size()
-    <<"*?]"
-    << suffix
-    <<std::endl;
+            << std::fixed << std::setprecision(2) << std::setfill('0') << std::setw(6)
+            << 100.f * probe / mElapsed
+            << "% <FUNCT/STATS> [+~" << probe / 1000000L
+            << "s~=+" <<probe << "us=" << mElapsed
+            <<"/" << mCollection.size()
+            <<"*?]"
+            << suffix
+            <<std::endl;
 
   for_each(mCollection.begin(), mCollection.end(),
            [prefix](std::pair<char const * const, Duration<>> &item) {
              // item.second.print(); // TODO
              item.second.mRatio = (float) item.second.mCumulated / mElapsed;
            }
-    );
+           );
 
   std::cout<<prefix
            <<"stats: sort: "<<mCollection.size() << std::endl << std::endl;

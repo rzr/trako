@@ -20,7 +20,7 @@
 template <typename T>
 class UtilsOf
 {
- public:
+public:
 
   /// @return typename as string
   static char const * const nametype()
@@ -43,7 +43,7 @@ class UtilsOf
 template <typename T = void, typename N = int>
 class CounterOf
 {
- public:
+public:
   /// @return current value
   N getValue(bool update=true)
   {
@@ -52,10 +52,10 @@ class CounterOf
   }
 
   /// @return difference since previous getValue()
-  N getDiff() const { return ( mCurrent - mPrev ); } 
+  N getDiff() const { return ( mCurrent - mPrev ); }
 
   /// @return maximum value since begining
-  N getMax() const { return mMax; } 
+  N getMax() const { return mMax; }
 
   /// @return minmum value since begining
   N getMin() const { return mMin; }
@@ -111,31 +111,31 @@ class CounterOf
   }
 
   /// @param verbose : set to false if only printing if there are changes
-   N print(bool verbose=true,
-           char const * const prefix=TRAKO_TAG("trace: "),
-           char const * const suffix="") //const
+  N print(bool verbose=true,
+          char const * const prefix=TRAKO_TAG("trace: "),
+          char const * const suffix="") //const
   {
     N vcur = 0,vmax = 0, vevr =0, vdif=0;
-    
+
     if (verbose || isChanged() != 0) {
       vdif = getDiff();
       vcur = getValue();
       vmax = getMax();
       vevr = getEver();
-      
+
       std::cout
-	<< prefix
-	<< "<"<<UtilsOf<T>::nametype()<<">"
-	<< (( vdif >= 0 ) ? " +" : " " ) <<vdif
-	<< "=" << vcur
-	<< " (<" << vmax << "<" << vevr <<" )"
+        << prefix
+        << "<"<<UtilsOf<T>::nametype()<<">"
+        << (( vdif >= 0 ) ? " +" : " " ) <<vdif
+        << "=" << vcur
+        << " (<" << vmax << "<" << vevr <<" )"
         << suffix
-	<< std::endl;
+        << std::endl;
     }
     return vdif;
   }
 
- protected:
+protected:
 
   /// current value
   N mCurrent;
@@ -156,4 +156,3 @@ class CounterOf
 #include "UtilsOf.hpp"
 
 #endif //_h_
-

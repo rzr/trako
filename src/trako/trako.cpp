@@ -7,4 +7,3 @@
 #include "config.h"
 
 #include "trako.h"
-
