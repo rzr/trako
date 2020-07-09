@@ -12,11 +12,21 @@ namespace trako {};
 # define TRAKO_CONFIG 1
 #endif
 
+#ifndef TRAKO_CONFIG_WARNING
+# define TRAKO_CONFIG_WARNING 1 //<<! Show warnings in logs if set to 1 [1]
+#endif
+
+#if TRAKO_CONFIG_WARNING
+#  if TRAKO_CONFIG
+#    warning "trako: enabled: https://github.org/rzr/trako for more"
+#  else
+#  warning "trako: disabled: https://github.org/rzr/trako for more"
+#  endif
+#endif
+
 #if TRAKO_CONFIG
-#  warning "trako: enabled, TRAKO macro can be used"
 #  include "lib.h"
 #else
-#  warning "trako: disabled, only TRAKO macros are still exported, remove include if not needed"
 #  define TRAKO(CMD) /// !<empty block, that will not be compiled
 #  define TRAKO_1(CMD)  /// !<empty block have no effect on perf
 #  define TRAKO_2(CMD, a) ///!<empty if command use args
