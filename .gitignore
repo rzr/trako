@@ -25,5 +25,13 @@ CMakeLists.txt
 cmake_install.cmake
 src/Makefile
 
+## debian files
+debian/*.substvars
+debian/*.debhelper.log
+debian/*.debhelper.log
+debian/.debhelper/
+debian/files
+debian/trako*/
+
 ## emacs files
 *#
