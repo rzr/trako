@@ -27,3 +27,6 @@ src/Makefile
 
 ## emacs files
 *#
+
+# tools files
+.vagrant/
