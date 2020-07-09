@@ -24,3 +24,12 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: C++ tracking library that count instances funct calls etc
  Trako aims to help profiling a C++ project in real time
  without changing much of the architecture and related code to be studied...
+
+Package: trako-snapshot
+Architecture: all
+Section: utils
+Depends: ${misc:Depends}, trako1 (= ${source:Version})
+Suggests: rzr
+Priority: extra
+Description: unreleased snapshot version
+ TODO: Remove on issue and upgrade trako
