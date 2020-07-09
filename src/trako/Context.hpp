@@ -25,17 +25,18 @@ trako::Context<>& trako::Context<T>::getInstance()
 template<typename T>
 trako::Context<T>::Context()
 {
-  std::cout<<TRAKO_TAG("init: {}")<<std::endl;
+  std::cout<<"trako: init: {"<<std::endl;
+  print(true, "trako: init: ", "init: ");
+  std::cout<<"trako: init: }"<<std::endl;
 }
 
 
 template<typename T>
 trako::Context<T>::~Context()
 {
-  std::cout<<TRAKO_TAG("term: {")<<std::endl;
-  print(TRAKO_TAG("term: "), true);
-  printDurationStats(TRAKO_TAG("term: "), true);
-  std::cout<<TRAKO_TAG("term: }")<<std::endl;
+  std::cout<<"trako: term: {"<<std::endl;
+  print(true, "trako: term: ", "term: ");
+  std::cout<<"trako: term: }"<<std::endl;
 }
 
 template<typename T>
@@ -54,21 +55,25 @@ std::map<char const * const, trako::Duration<> >& trako::Context<T>::getDuration
 
 
 template<typename T>
-void trako::Context<T>::print(char const * const context, bool force)
+void trako::Context<T>::printClass(bool verbose,
+                              char const * const prefix,
+                              char const * const suffix)
 {
   std::list<trako::MetaClassInterface const *>::const_iterator it;
 
   for( it = mClassCollection.begin(); it != mClassCollection.end() ; ++it) {
     trako::MetaClassInterface const * const p = *it;
-    if (p) p->print(context, force);
+    if (p) p->print(verbose, prefix, suffix);
   }
 }
 
 
 template<typename T>
-void trako::Context<T>::printDurationStats(char const * const prefix, bool verbose)
+void trako::Context<T>::printFunct(bool verbose,
+                                        char const * const prefix,
+                                        char const * const suffix)
 {
-  trako::Duration<>::printStats(prefix, verbose);
+  trako::Duration<>::printStats(verbose, prefix, suffix);
 }
 
 #endif

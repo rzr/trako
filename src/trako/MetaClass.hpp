@@ -28,6 +28,7 @@ trako::MetaClass<T>::MetaClass(char const * const prefix,
   )
   : mPrefix(prefix), mName(name), mVerbose(verbose), mProfile(profile)
 {
+  Context<>::getInstance(); // Init
   if (!name) {
     mName=UtilsOf<T>::nametype();
   }
@@ -81,17 +82,22 @@ trako::MetaClass<T>::~MetaClass()
 
 
 template<typename T>
-int trako::MetaClass<T>::print(char const * const prefix, bool force) const
+int trako::MetaClass<T>::print( bool verbose,
+                                char const * const prefix,
+                                char const * const suffix) const
 {
-  int res = mCounter.print(prefix, force);
+  int res = mCounter.print(verbose, prefix, suffix);
   return res;
 }
 
 
 template<typename T>
-int trako::MetaClass<T>::printStats(char const * const prefix, bool force)
+int trako::MetaClass<T>::printStats(bool verbose,
+                                    char const * const prefix,
+                                    char const * const suffix)
 {
-  int res = mCounter.print(prefix, force);
+  trako::Context<>::getInstance();
+  int res = mCounter.print(verbose, prefix, suffix);
   return res;
 }
 

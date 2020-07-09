@@ -95,7 +95,7 @@ class MyClass { TRAKO(CLASS(MyClass)); };
 Then you can collect stats, anywhere you have to call :
 
 ```c++
-TRAKO(PRINT(CLASS()); //will print new instances
+TRAKO(CLASS_STATS()); //will print new instances
 ```
 
 and the result will be printed to console :

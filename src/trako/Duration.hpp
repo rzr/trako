@@ -78,7 +78,8 @@ trako::Duration<>& trako::Duration<T>::get(char const * const id,
 }
 
 template <typename T>
-void trako::Duration<T>::print(char const * const prefix, bool verbose,
+void trako::Duration<T>::print(bool verbose,
+                               char const * const prefix,
                                char const * const suffix) const
 {
   std::cout << ( (!prefix) ? mPrefix : prefix );
@@ -101,7 +102,8 @@ void trako::Duration<T>::print(char const * const prefix, bool verbose,
   std::cout << " <" << mName << "> [~"
       << mCumulated / count / 1000000L << "s="
       << mCumulated / count << "us"
-      << "*" << count << "~=" << elapsed << "us" << "]" <<std::endl;
+      << "*" << count << "~=" << elapsed << "us" << "]" 
+      << suffix << std::endl;
 }
 
 
@@ -217,7 +219,9 @@ void trako::Duration<T>::stop(bool verbose)
 }
 
 template <typename T>
-void trako::Duration<T>::printStats(char const * const prefix, bool verbose)
+void trako::Duration<T>::printStats(bool verbose,
+                                    char const * const prefix,
+                                    char const * const suffix)
 {
   if (!verbose) return;
 #ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
@@ -227,10 +231,11 @@ void trako::Duration<T>::printStats(char const * const prefix, bool verbose)
   std::cout << std::endl << prefix
     << std::fixed << std::setprecision(2) << std::setfill('0') << std::setw(6)
     << 100.f * probe / mElapsed
-    << "% <#stats> [+~" << probe / 1000000L
+    << "% <FUNCT/STATS> [+~" << probe / 1000000L
     << "s~=+" <<probe << "us=" << mElapsed
     <<"/" << mCollection.size()
     <<"*?]"
+    << suffix
     <<std::endl;
 
   for_each(mCollection.begin(), mCollection.end(),
@@ -253,14 +258,14 @@ void trako::Duration<T>::printStats(char const * const prefix, bool verbose)
   std::set<std::pair<char const * const, Duration<> >, Comparator> sortedCollectionSet
     (mCollection.begin(), mCollection.end(), compFunctor);
   for (std::pair<char const * const, Duration<> > item : sortedCollectionSet) {
-    item.second.print(0, verbose);
+    item.second.print(verbose, "trako: FUNCT/STATS: ");
   }
 
   std::cout
     << std::endl<<prefix
     << std::fixed << std::setprecision(2) << std::setfill('0') << std::setw(6)
     << 100.f
-    << "% <#DurationStats> [+~" << mElapsed / 1000000L
+    << "% <FUNCT/STATS> [+~" << mElapsed / 1000000L
     << "s~=+" <<mElapsed << "us"
     << "/" << mCollection.size()
     << "]"

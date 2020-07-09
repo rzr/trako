@@ -110,12 +110,14 @@ class CounterOf
     return res;
   }
 
-  /// @param force : set to false if only printing if there are changes
-   N print(char const * const prefix=TRAKO_TAG("trace: "), bool force=true) //const
+  /// @param verbose : set to false if only printing if there are changes
+   N print(bool verbose=true,
+           char const * const prefix=TRAKO_TAG("trace: "),
+           char const * const suffix="") //const
   {
     N vcur = 0,vmax = 0, vevr =0, vdif=0;
     
-    if ( force || isChanged() != 0) {
+    if (verbose || isChanged() != 0) {
       vdif = getDiff();
       vcur = getValue();
       vmax = getMax();
@@ -127,6 +129,7 @@ class CounterOf
 	<< (( vdif >= 0 ) ? " +" : " " ) <<vdif
 	<< "=" << vcur
 	<< " (<" << vmax << "<" << vevr <<" )"
+        << suffix
 	<< std::endl;
     }
     return vdif;

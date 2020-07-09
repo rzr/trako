@@ -20,13 +20,16 @@ template<typename T=void>
 class Duration
 {
 public:
-  static void printStats(char const * const prefix=0, bool verbose=true);
+  static void printStats(bool verbose=true,
+                         char const * const prefix=0,
+                         char const * const suffix="");
   static Duration<>& get(char const * const prefix, char const * const name=0);
   Duration(char const * const prefix=0, char const * const name=0,
            bool verbose=false);
 public:
-  void print(char const * const prefix=0, bool verbose=true,
-             char const * const suffix="\n") const;
+  void print(bool verbose=true,
+             char const * const prefix=0,
+             char const * const suffix="") const;
   void start(bool verbose=false);
   void stop(bool verbose=false);
 protected:

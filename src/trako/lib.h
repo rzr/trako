@@ -72,26 +72,25 @@ namespace trako {
   TRAKO_CALL_TAG_(trako::Context<>, getInstance().funct)
 
 /// trace all stats of all tracked class
-#  define TRAKO_COUNT()                         \
-  trako::Context<>::getInstance().printStats(TRAKO_TAG("CLASS/COUNT: "));
-
 /// trace changed stats of all tracked class since previous trace
-#  define TRAKO_DIFF()                   \
-  trako::Context<>::getInstance().printDiff(TRAKO_TAG("CLASS/DIFF: "));
+#  define TRAKO_CLASS_DIFF()                                                  \
+  trako::Context<>::getInstance().printClass(false, TRAKO_TAG("CLASS/DIFF: "));
 
-#  define TRAKO_PRINT_FUNCT()                   \
-  trako::Context<>::getInstance().printDurationStats(TRAKO_TAG("FUNCT/STATS:"));
+#  define TRAKO_FUNCT_STATS()                                           \
+  trako::Context<>::getInstance().printFunct(true, TRAKO_TAG("FUNCT/STATS: "));
 
+#  define TRAKO_CLASS_STATS()                                           \
+  trako::Context<>::getInstance().printClass(true, TRAKO_TAG("CLASS/STATS: "));
 
-#  define TRAKO_PRINT_CLASS()                   \
-  trako::Context<>::getInstance().printStats(TRAKO_TAG("CLASS/STATS:"));
+#  define TRAKO_STATS()                                           \
+  trako::Context<>::getInstance().print(true, TRAKO_TAG("STATS: "));
 
-#  define TRAKO_PRINT(type)                     \
-  TRAKO_PRINT#type
+#  define TRAKO_TYPE_STATS(type)               \
+  TRAKO_ #type _STATS
 
 /// trace stats of the tracked class from tracked typename
-#  define TRAKO_TYPE( type )                                    \
-  trako::MetaClass<type>::printStats(TRAKO_TAG("type: "), true)
+#  define TRAKO_TYPE(type)                                              \
+  trako::MetaClass<type>::printStats(true, TRAKO_TAG("CLASS/TYPE: "))
 
 /// trace stats of the tracked class from tracked object
 #if 0
