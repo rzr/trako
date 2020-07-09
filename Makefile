@@ -115,6 +115,9 @@ rule/debian/setup: /etc/debian_version
 	${sudo} apt-get update
 	${sudo}	apt-get install -y make
 
+setup: rule/debian/setup
+#	@echo "TODO: Support other OS"
+
 -include ~/bin/mk-local.mk
 
 rule/src/test: src
@@ -205,6 +208,13 @@ rule/check/cmake: src/CMakeLists.txt
 rule/check/docker: Dockerfile
 	docker build -t "${project}" .
 	docker run "${project}"
+
+Vagrantfile:
+	vagrant init hashicorp/bionic64
+
+rule/check/vagrant: Vagrantfile
+	vagrant up
+	vagrant provision
 
 release/%: tests
 	git describe --tags
