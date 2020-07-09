@@ -62,7 +62,7 @@ class MetaClass : public MetaClassInterface
   bool mFunct; ///< Execution Context for functions not classes
   bool mVerbose; ///< enable trace
   bool mProfile; ///< enable time profiling 
-  Duration<> mDuration; ///< time counter for functs
+  Duration<>* mDuration; ///< time counter for functs
   static MetaClass<T>* mShared; ///< Shared metaclass of all instances
   static CounterOf<T> mCounter; ///< instances counter smart
   static CounterOf< MetaClass<T> > mDepthCounter; ///< for functs

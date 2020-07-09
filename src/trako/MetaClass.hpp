@@ -51,8 +51,8 @@ trako::MetaClass<T>::MetaClass(char const * const prefix,
     }
     mDepthCounter.add();
     if (mProfile) {
-      mDuration = Duration<>::get(mPrefix, mName);
-      mDuration.start(mVerbose);
+      mDuration = &Duration<>::get(mPrefix, mName);
+      mDuration->start(mVerbose);
       }
     if (mVerbose) {
       std::cout<<std::endl;
@@ -73,7 +73,7 @@ trako::MetaClass<T>::~MetaClass()
       printf("%s} %s @%d", mPrefix, mName, mDepthCounter.getValue());
     }
     if (mProfile) {
-      mDuration.stop(mVerbose);
+      mDuration->stop(mVerbose);
     }
     if (mVerbose) {
       std::cout<<std::endl;
