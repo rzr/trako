@@ -61,7 +61,7 @@ protected:
 protected:
   static std::map<char const * const, Duration<>> mCollection;
 };
-};
+}
 
 #include "Duration.hpp"
 

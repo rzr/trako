@@ -24,6 +24,7 @@ trako::Context<>& trako::Context<T>::getInstance()
 
 template<typename T>
 trako::Context<T>::Context()
+  : mClassCollection{}
 {
   std::cout<<"trako: init: {"<<std::endl;
   print(true, "trako: init: ", "init: ");

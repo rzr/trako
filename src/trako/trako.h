@@ -6,7 +6,7 @@
 #ifndef Trako_Trako_h_
 #define Trako_Trako_h_
 
-namespace trako {};
+namespace trako {}
 
 #ifndef TRAKO_CONFIG
 # define TRAKO_CONFIG 1

@@ -24,7 +24,7 @@ private:
   static pthread_mutex_t mMutex;
 #endif
 };
-};
+}
 
 # include "MetaMutex.hpp"
 
