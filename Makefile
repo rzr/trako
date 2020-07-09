@@ -1,7 +1,8 @@
 # !/usr/bin/make -f
-default: help all
+project?=trako
 
-package?=trako
+default: help rule/version all
+
 
 # Alternatively disable trako
 # TRAKO_CONFIG?=0
@@ -12,10 +13,10 @@ TRAKO_CONFIG_WARNING?=0
 
 export V?=1
 
-srcs?=$(wildcard src/${package}/*.cpp | sort)
-headers?=$(wildcard src/${package}/*.h | sort)
+srcs?=$(wildcard src/${project}/*.cpp | sort)
+headers?=$(wildcard src/${project}/*.h | sort)
 objs?=${srcs:.cpp=.o}
-lib?=lib${package}.a
+lib?=lib${project}.a
 libs?=
 main_src?=src/main.cpp
 main_exe?=${main_src:.cpp=}
@@ -25,7 +26,7 @@ log?=${target}.log.txt.tmp
 CXXFLAGS+=-Isrc
 CXXFLAGS+=-Wall -Werror -Wpedantic
 
-install_header_dir?=${DESTDIR}/usr/include/${package}
+install_header_dir?=${DESTDIR}/usr/include/${project}
 install_lib_dir?=${DESTDIR}/usr/lib/
 
 sudo?=$(shell which sudo 2> /dev/null || echo)
@@ -60,7 +61,8 @@ log: ${log}
 
 update: main.log.txt ${log}
 	cp -av ${log}  $<
-	-git diff --exit-code || git difftool $<
+	-git diff --exit-code # || git difftool $<
+	-git commit -sm 'Update trace before release' $<
 
 
 clean: force
@@ -83,7 +85,7 @@ help:
 	@echo "# srcs=${srcs}"
 	@echo "# CXXFLAGS=${CXXFLAGS}"
 
-lib${package}.a: ${objs}
+${lib}: ${objs}
 	${AR} cru $@ $^
 #	nm --demangle $@
 
@@ -109,10 +111,18 @@ COPYING:/usr/share/common-licenses/LGPL-3
 	test -e $@ || echo "TODO: port to other OS"
 	cat $@
 
+rule/version:
+	${MAKE} --version
+	${CXX} --version
+	-cmake --version
+
 rule/debian/setup: /etc/debian_version
 	cat $<
 	${sudo} apt-get update
 	${sudo}	apt-get install -y make
+
+setup: rule/debian/setup
+#	@echo "TODO: Support other OS"
 
 -include ~/bin/mk-local.mk
 
@@ -125,7 +135,6 @@ rule/src/test: src
 
 
 test: distclean all run
-	${MAKE} distclean
 	@echo "# log: success: $@"
 
 rule/test/flag/boolean/0/%:
@@ -144,7 +153,7 @@ rule/test/flag/boolean/%:
 	${MAKE} ${@D}/1/${@F}
 	@echo "# log: success: $@"
 
-check: ${target}
+check: rule/version all
 	${MAKE} run > ${log}
 	cat ${log} | grep '^trako: init: }'
 	cat ${log} | grep ' trako: FUNCT: } int main('
@@ -185,15 +194,45 @@ rule/test/flag/TRAKO_CONFIG_WARNING: distclean
   2>&1 | grep "warning \"trako: " \
   && exit 1 || echo "# log: success: $@"
 
-tests: distclean
+rule/tests: distclean
 	@echo "# log: try: $@"
-	${MAKE} distclean check
+	${MAKE} distclean test
 	${MAKE} rule/test/flag/TRAKO_CONFIG
 	${MAKE} rule/test/flag/TRAKO_CONFIG_LIB
 	${MAKE} rule/test/flag/TRAKO_CONFIG_WARNING
 	-git status
 	@echo "# log: success: $@"
 
-cmake: src/CMakeLists.txt
+rule/cmake: src/CMakeLists.txt
 	cd ${<D} && cmake . && cmake --build .
+
+rule/docker: Dockerfile
+	docker build -t "${project}" .
+	docker run "${project}"
+
+
+rule/tools: distclean rule/tests check
+	${MAKE} rule/cmake
+	${MAKE} rule/docker
+
+rule/update/%:
+	git describe --tags
+	sed -e "s|\(\#define TRAKO_VERSION \).*|\1\"${@F}\"|g" \
+  -i src/${project}/macros.h
+	sed -e "s|\(git clone .* --branch \).*|\1\"${@F}\"|g" \
+  -i README.md
+	dch --newversion "${@F}-0" "Release ${@F}"
+
+rule/release/%: distclean rule/update/%
+	git checkout master
+	grep VERSION src/${project}/macros.h | grep ${@F}
+	${MAKE} test
+	${MAKE} rule/tests
+	${MAKE} update
+	${MAKE} rule/tools
+	git commit -sam 'Release ${@F}'
+	git tag -sm "${project}-${@F}" "${@F}" HEAD
+	git describe --tags | grep "^${@F}$$"
+	@echo "# git push --force origin --tags master # To upload release"
+
 #eof

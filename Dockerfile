@@ -26,5 +26,5 @@ RUN set -x \
 ADD . ${workdir}
 
 RUN set -x \
-  && make run \
+  && make check \
   && sync
