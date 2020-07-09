@@ -1,7 +1,7 @@
 # !/usr/bin/make -f
 default: help all
 
-package?=trako
+project?=trako
 
 # Alternatively disable trako
 # TRAKO_CONFIG?=0
@@ -12,10 +12,10 @@ TRAKO_CONFIG_WARNING?=0
 
 export V?=1
 
-srcs?=$(wildcard src/${package}/*.cpp | sort)
-headers?=$(wildcard src/${package}/*.h | sort)
+srcs?=$(wildcard src/${project}/*.cpp | sort)
+headers?=$(wildcard src/${project}/*.h | sort)
 objs?=${srcs:.cpp=.o}
-lib?=lib${package}.a
+lib?=lib${project}.a
 libs?=
 main_src?=src/main.cpp
 main_exe?=${main_src:.cpp=}
@@ -25,7 +25,7 @@ log?=${target}.log.txt.tmp
 CXXFLAGS+=-Isrc
 CXXFLAGS+=-Wall -Werror -Wpedantic
 
-install_header_dir?=${DESTDIR}/usr/include/${package}
+install_header_dir?=${DESTDIR}/usr/include/${project}
 install_lib_dir?=${DESTDIR}/usr/lib/
 
 sudo?=$(shell which sudo 2> /dev/null || echo)
@@ -60,7 +60,8 @@ log: ${log}
 
 update: main.log.txt ${log}
 	cp -av ${log}  $<
-	-git diff --exit-code || git difftool $<
+	-git diff --exit-code # || git difftool $<
+	-git commit -sm 'Update trace before release' $<
 
 
 clean: force
@@ -83,7 +84,7 @@ help:
 	@echo "# srcs=${srcs}"
 	@echo "# CXXFLAGS=${CXXFLAGS}"
 
-lib${package}.a: ${objs}
+lib${project}.a: ${objs}
 	${AR} cru $@ $^
 #	nm --demangle $@
 
@@ -194,6 +195,24 @@ tests: distclean
 	-git status
 	@echo "# log: success: $@"
 
-cmake: src/CMakeLists.txt
+check:
+	${MAKE} rule/check/cmake
+	${MAKE} rule/check/docker
+
+rule/check/cmake: src/CMakeLists.txt
 	cd ${<D} && cmake . && cmake --build .
+
+rule/check/docker: Dockerfile
+	docker build -t "${project}" .
+	docker run "${project}"
+
+release/%: tests
+	git describe --tags
+	sed -e "s|\(\#define TRAKO_VERSION \).*|\1\"${@F}\"|g" \
+  -i src/${project}/macros.h
+	grep VERSION src/${project}/macros.h | grep ${@F}
+	${MAKE} tests update
+	dch --newversion "${@F}-0" "Release ${@F}"
+	git commit -sam 'WIP: Release ${@F}'
+
 #eof
