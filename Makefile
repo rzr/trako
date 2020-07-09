@@ -174,4 +174,7 @@ tests: distclean
 	${MAKE} rule/test/flag/TRAKO_CONFIG_WARNING
 	-git status
 	@echo "# log: success: $@"
+
+cmake: src/CMakeLists.txt
+	cd ${<D} && cmake . && cmake --build .
 #eof
