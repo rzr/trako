@@ -6,4 +6,3 @@
 #include "config.h"
 
 #include "MetaClass.hpp"
-

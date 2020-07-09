@@ -57,8 +57,8 @@ std::map<char const * const, trako::Duration<> >& trako::Context<T>::getDuration
 
 template<typename T>
 void trako::Context<T>::printClass(bool verbose,
-                              char const * const prefix,
-                              char const * const suffix)
+                                   char const * const prefix,
+                                   char const * const suffix)
 {
   std::list<trako::MetaClassInterface const *>::const_iterator it;
 
@@ -71,8 +71,8 @@ void trako::Context<T>::printClass(bool verbose,
 
 template<typename T>
 void trako::Context<T>::printFunct(bool verbose,
-                                        char const * const prefix,
-                                        char const * const suffix)
+                                   char const * const prefix,
+                                   char const * const suffix)
 {
   trako::Duration<>::printStats(verbose, prefix, suffix);
 }
