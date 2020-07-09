@@ -1,28 +1,11 @@
-# file:
-set(package "trako")
+# file: trako/src/CMakeLists.txt
+project(TrakoExample)
+set(package "trako-example")
 
 cmake_minimum_required(VERSION 2.6)
 
-
-file(GLOB src 
-  "${package}/*.cpp"
-  "${package}/*.hpp"
-  "${package}/*.h"
-  )
-
-
-include_directories(${package})
-
-
-add_library( "${package}"
-  #   SHARED
-  ${src}
-  )
-
+include_directories("trako/..")
 
 add_executable( "main"
   main.cpp
   )
-
-
-TARGET_LINK_LIBRARIES( "main" "${package}")
