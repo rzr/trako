@@ -26,7 +26,10 @@ template<typename T>
 trako::Context<T>::Context()
   : mClassCollection{}
 {
-  std::cout<<"trako: init: {"<<std::endl;
+  std::cout
+    << "trako: init: {" << std::endl
+    << "trako: init: " << TRAKO_PACKAGE << "-" << TRAKO_VERSION << std::endl
+    << "trako: init: " << TRAKO_URL << std::endl;
   print(true, "trako: init: ", "init: ");
   std::cout<<"trako: init: }"<<std::endl;
 }
@@ -37,7 +40,10 @@ trako::Context<T>::~Context()
 {
   std::cout<<"trako: term: {"<<std::endl;
   print(true, "trako: term: ", "term: ");
-  std::cout<<"trako: term: }"<<std::endl;
+  std::cout
+    << "trako: term: " << TRAKO_PACKAGE << "-" << TRAKO_VERSION << std::endl
+    << "trako: term: " << TRAKO_URL << std::endl
+    << "trako: term: }"<<std::endl;
 }
 
 template<typename T>
