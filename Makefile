@@ -189,18 +189,14 @@ rule/test/flag/TRAKO_CONFIG_WARNING: distclean
   2>&1 | grep "warning \"trako: " \
   && exit 1 || echo "# log: success: $@"
 
-tests: distclean
+rule/tests: distclean
 	@echo "# log: try: $@"
-	${MAKE} distclean check
+	${MAKE} distclean test
 	${MAKE} rule/test/flag/TRAKO_CONFIG
 	${MAKE} rule/test/flag/TRAKO_CONFIG_LIB
 	${MAKE} rule/test/flag/TRAKO_CONFIG_WARNING
 	-git status
 	@echo "# log: success: $@"
-
-check:
-	${MAKE} rule/check/cmake
-	${MAKE} rule/check/docker
 
 rule/check/cmake: src/CMakeLists.txt
 	cd ${<D} && cmake . && cmake --build .
@@ -209,6 +205,12 @@ rule/check/docker: Dockerfile
 	docker build -t "${project}" .
 	docker run "${project}"
 
+
+check: distclean rule/tests
+	${MAKE} rule/check/cmake
+	${MAKE} rule/check/docker
+	${MAKE}	rule/check/vagrant
+
 Vagrantfile:
 	vagrant init hashicorp/bionic64
 
@@ -216,13 +218,13 @@ rule/check/vagrant: Vagrantfile
 	vagrant up
 	vagrant provision
 
-release/%: tests
+rule/release/%: distclean rule/tests update
 	git describe --tags
 	sed -e "s|\(\#define TRAKO_VERSION \).*|\1\"${@F}\"|g" \
   -i src/${project}/macros.h
 	grep VERSION src/${project}/macros.h | grep ${@F}
-	${MAKE} tests update
+	${MAKE} check
 	dch --newversion "${@F}-0" "Release ${@F}"
-	git commit -sam 'WIP: Release ${@F}'
+	git commit -sam 'Release ${@F}'
 
 #eof
