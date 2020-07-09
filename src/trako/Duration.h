@@ -59,7 +59,7 @@ namespace trako {
     timeval mStopTime;
 #endif
   protected:
-    static std::map<char const * const, Duration<>> mCollection;
+    static std::map<char const * const, Duration<> > mCollection;
   };
 }
 
