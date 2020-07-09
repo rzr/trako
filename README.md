@@ -7,7 +7,7 @@ https://GitHub.com/rzr/trako/network/
 )
 [![license](
 https://img.shields.io/badge/license-LGPL-3p.svg
-)](LGPL-3p)
+)](COPYING)
 [![Codacy Badge](
 https://app.codacy.com/project/badge/Grade/1974469fd285468380f5223dee280949
 )](
@@ -54,17 +54,19 @@ Features :
 * Integration in emacs (and probably other grep supported editors/IDE) :
   * file:line log entry format , just jump to the right place in one click
 
-### USAGE ###
+## USAGE ##
 
-## Download ##
+### Download ###
 
 In your project directory or system dirs (ie: /usr/local/include/trako)
 
 ```sh
-git clone --depth 1 https://github.com/rzr/trako
+git clone --depth 1 https://github.com/rzr/trako --branch "master"
+# Optionally build and run the example program, to profile execution.
+make -C trako run
 ```
 
-## Include Header ##
+### Include Header ###
 
 Include trako.h in your project,
 let me suggest to do this a common included file (ie: config.h or private.h etc):
@@ -82,7 +84,7 @@ let me suggest to do this a common included file (ie: config.h or private.h etc)
 #endif
 ```
 
-## Modify Code ##
+### Modify Code ###
 
 Use the single "TRAKO" macro with a couple of TRAKO commands
 
@@ -141,13 +143,33 @@ For more have a look at the example file and it's trace :
 * src/main.cpp
 * main.log.txt
 
-### KNOWN BUGS AND LIMITATIONS ###
+## KNOWN BUGS AND LIMITATIONS ##
 
 * fell free to report discovered bugs, wishes etc by email
 * supporting only g++ so far
 * barely supports typename collision among different namespaces
 
-### TODO ###
+## SUPPORT ##
+
+Some success have been observed with following compilers:
+
+* g++ (Debian 6.3.0-18+deb9u1) 6.3.0 20170516 @ debian:9/amd64
+* g++ (Raspbian 6.3.0-18+rpi1+deb9u1) 6.3.0 20170516 @ Raspbian_9.0/armv7l
+* g++ (Debian 8.3.0-6) 8.3.0 @ debian:10/x86_64
+* g++ (Ubuntu 9.3.0-10ubuntu2) 9.3.0 @ Ubuntu_20.04/x86_64
+
+While those versions may need extra efforts (please submit tickets for no cxx11 support):
+
+* g++ (Debian 4.9.2-10+deb8u2) 4.9.2 @ Debian:8
+* g++ (Ubuntu 5.3.1-14ubuntu2) 5.3.1 20160413 @ Ubuntu_16.04/i586
+
+Please report for others platforms:
+
+* clang : TODO
+* msvc : TODO
+* others ?
+
+## TODO ##
 
 Other features may come later,
 most of them are already in progress if not done
@@ -163,3 +185,13 @@ I plan to publish them once polished...
 
 * Refactoring tasks :
   * TODO [#C] use STL's functions objects
+
+## RESOURCES ##
+
+*   <https://purl.org/rzr/trako>
+*   <https://github.com/rzr/trako/>
+*   <https://mastodon.social/@rzr/104472772309868728>
+*   <https://mastodon.social/@rzr/104472726388678528>
+*   <https://gitorious.org/trako>
+*   <https://archive.softwareheritage.org/browse/content/ed87e2ddd12353b8924bb5652b9527822d81028a/>
+*   <https://notabug.org/rzr/trako>
