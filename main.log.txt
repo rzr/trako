@@ -1,51 +1,184 @@
-trako.h:0: info: trako-0.0.0program is beeing profiled
-src/main.cpp:53: scope: { main @0 [=0s 15us]
+trako: init: {
+trako: init: trako-0.2.0
+trako: init: https://purl.org/rzr/trako
 
-# Profiling classes instances
-src/main.cpp:58: trace: <MyClass> +1=1 = 8B (<1<1 )
-src/main.cpp:63: trace: <MyClass> +1=2 = 16B (<2<2 )
-src/main.cpp:66: trace: <MyClass> +1=3 = 24B (<3<3 )
-src/main.cpp:69: trace: <MyClass> -1=2 = 16B (<3<3 )
+trako: init: 100.00% <FUNCT/STATS> [+~1594315038s~=+1594315038774278us=1594315038774278/0*?]init: 
+trako: init: stats: sort: 0
 
-# Profiling methods
-src/main.cpp:77: trace: <MyClass> -1=1 = 8B (<3<3 )
-src/main.cpp:24: scope: { method @1 [=0s 102us]
-src/main.cpp:30: scope: { methodSub @2 [=0s 103us]
-src/main.cpp:30: scope: } methodSub @2 [+0s 1us]
-src/main.cpp:24: scope: } method @1 [+0s 3us]
-src/main.cpp:24: scope: { method @1 [=0s 106us]
-src/main.cpp:30: scope: { methodSub @2 [=0s 107us]
-src/main.cpp:30: scope: } methodSub @2 [+0s 1us]
-src/main.cpp:24: scope: } method @1 [+0s 3us]
-src/main.cpp:42: scope: { methodLong @1 [=0s 112us]
-src/main.cpp:42: scope: } methodLong @1 [+0s 160us]
-src/main.cpp:89: type: <void*> 0=0 = 0B (<0<0 )
 
-# Profiling program
-src/main.cpp:96: trace: <MyClass> 0=1 = 8B (<3<4 )
-src/main.cpp:96: trace: <MyOtherClass> +1=1 = 8B (<2<2 )
+trako: init: 100.00% <FUNCT/STATS> [+~1594315038s~=+1594315038774278us/0]
 
-# Profiling scopes
-src/main.cpp:100: scope: { row @1 [=0s 291us]
-src/main.cpp:102: scope: { col @2 [=0s 292us]
-src/main.cpp:102: scope: } col @2 [+0s 1us]
-src/main.cpp:102: scope: { col @2 [=0s 293us]
-src/main.cpp:102: scope: } col @2 [+0s 1us]
-src/main.cpp:100: scope: } row @1 [+0s 4us]
-src/main.cpp:100: scope: { row @1 [=0s 296us]
-src/main.cpp:102: scope: { col @2 [=0s 297us]
-src/main.cpp:102: scope: } col @2 [+0s 1us]
-src/main.cpp:102: scope: { col @2 [=0s 299us]
-src/main.cpp:102: scope: } col @2 [+0s 1us]
-src/main.cpp:100: scope: } row @1 [+0s 5us]
+trako: init: }
+src/main.cpp:74: trako: FUNCT: { int main(int, char**) @0 [000.00%*0+?0*0/1us]
 
-# Multithreading
-src/main.cpp:109: scope: { mutex: this line wont be split @1 [=0s 305us]
-src/main.cpp:109: scope: } mutex: this line wont be split @1 [+0s 1us]
+# Tracing functions:
+src/main.cpp:26: trako: FUNCT: { void myFunction(int) @1 [000.00%*0+?0*0/24us]
+src/main.cpp:28: trako: SCOPE: { myFunctionAfterTest@src/main.cpp:28:  @2 [000.00%*0+?0*0/43us]
+src/main.cpp:26: trako: FUNCT: { void myFunction(int) @3 [000.00%*1+?0*1/60us]
+src/main.cpp:28: trako: SCOPE: { myFunctionAfterTest@src/main.cpp:28:  @4 [000.00%*1+?0*1/71us]
+src/main.cpp:26: trako: FUNCT: { void myFunction(int) @5 [000.00%*2+?0*2/80us]
+src/main.cpp:26: trako: FUNCT: } void myFunction(int) @5 [000.00% *3+=66us=0us~/3]
+
+src/main.cpp:28: trako: SCOPE: } myFunctionAfterTest@src/main.cpp:28:  @4 [000.00% *2+=56us=0us~/2]
+
+src/main.cpp:26: trako: FUNCT: } void myFunction(int) @3 [000.00% *2+=84us=0us~/3]
+
+src/main.cpp:28: trako: SCOPE: } myFunctionAfterTest@src/main.cpp:28:  @2 [063.25% *1+=74us=74us~/2]
+
+src/main.cpp:26: trako: FUNCT: } void myFunction(int) @1 [081.10% *1+=103us=103us~/3]
+
+
+# Monitoring classes instances
+src/main.cpp:82: trako: CLASS/STATS: <MyClass> +1=1 (<1<1 )
+src/main.cpp:85: trako: CLASS/STATS: <MyClass> +1=2 (<2<2 )
+src/main.cpp:88: trako: CLASS/STATS: <MyClass> -1=1 (<2<2 )
+src/main.cpp:88: trako: CLASS/STATS: <MyOtherClass> +1=1 (<1<1 )
+src/main.cpp:92: trako: CLASS/TYPE: <MyClass> +1=2 (<2<3 )
+src/main.cpp:95: trako: CLASS/DIFF: <MyOtherClass> +1=2 (<2<2 )
+src/main.cpp:98: trako: CLASS/DIFF: <MyClass> +1=3 (<3<4 )
+src/main.cpp:101: trako: CLASS/DIFF: <MyClass> -1=2 (<3<4 )
+
+# Monitoring methods
+src/main.cpp:106: trako: CLASS/STATS: <MyClass> +0=2 (<3<4 )
+src/main.cpp:106: trako: CLASS/STATS: <MyOtherClass> -1=1 (<2<2 )
+src/main.cpp:45: trako: FUNCT: { void MyOtherClass::myMethod() @1 [000.00%*0+?0*0/239us]
+src/main.cpp:45: trako: FUNCT: } void MyOtherClass::myMethod() @1 [004.02% *1+=10us=10us~/1]
+
+src/main.cpp:45: trako: FUNCT: { void MyOtherClass::myMethod() @1 [003.86%*0+?10*1/259us]
+src/main.cpp:45: trako: FUNCT: } void MyOtherClass::myMethod() @1 [007.43% *1+=10us=20us~/2]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [000.00%*0+?0*0/283us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [076.78% *1+=936us=936us~/1]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [075.24%*0+?936*1/1244us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [085.09% *1+=822us=1758us~/2]
+
+src/main.cpp:117: trako: CLASS/STATS: <MyClass> +0=2 (<3<4 )
+src/main.cpp:117: trako: CLASS/STATS: <MyOtherClass> +1=2 (<2<4 )
+
+# Monitoring program
+
+src/main.cpp:120: trako: FUNCT/STATS: 100.00% <FUNCT/STATS> [+~0s~=+2089us=2089/6*?]
+src/main.cpp:120: trako: FUNCT/STATS: stats: sort: 6
+
+trako: FUNCT/STATS: ???.??% <int main(int, char**)> [~0s=0us*1~=2089us]
+trako: FUNCT/STATS: 000.96% <void MyOtherClass::myMethod()> [~0s=10us*2~=2089us]
+trako: FUNCT/STATS: 003.54% <myFunctionAfterTest@src/main.cpp:28: > [~0s=37us*2~=2089us]
+trako: FUNCT/STATS: 004.93% <void myFunction(int)> [~0s=34us*3~=2089us]
+trako: FUNCT/STATS: 082.91% <void MyOtherClass::myLongMethod()> [~0s=866us*2~=2089us]
+trako: FUNCT/STATS: 084.16% <void MyOtherClass::mySubMethod()> [~0s=879us*2~=2089us]
+
+src/main.cpp:120: trako: FUNCT/STATS: 100.00% <FUNCT/STATS> [+~0s~=+2089us/6]
+
+src/main.cpp:123: trako: CLASS/DIFF: <MyOtherClass> +1=3 (<3<5 )
+src/main.cpp:126: trako: CLASS/STATS: <MyClass> +0=2 (<3<4 )
+src/main.cpp:126: trako: CLASS/STATS: <MyOtherClass> -1=2 (<3<5 )
+
+# Monitoring scopes
+src/main.cpp:130: trako: SCOPE: { row@src/main.cpp:130:  @1 [000.00%*0+?0*0/2170us]
+src/main.cpp:132: trako: SCOPE: { col@src/main.cpp:132:  @2 [000.00%*0+?0*0/2178us]
+src/main.cpp:132: trako: SCOPE: } col@src/main.cpp:132:  @2 [000.27% *1+=6us=6us~/1]
+
+src/main.cpp:132: trako: SCOPE: { col@src/main.cpp:132:  @2 [000.27%*0+?6*1/2189us]
+src/main.cpp:132: trako: SCOPE: } col@src/main.cpp:132:  @2 [000.55% *1+=6us=12us~/2]
+
+src/main.cpp:130: trako: SCOPE: } row@src/main.cpp:130:  @1 [001.36% *1+=30us=30us~/1]
+
+src/main.cpp:130: trako: SCOPE: { row@src/main.cpp:130:  @1 [001.36%*0+?30*1/2206us]
+src/main.cpp:132: trako: SCOPE: { col@src/main.cpp:132:  @2 [000.54%*0+?6*2/2212us]
+src/main.cpp:132: trako: SCOPE: } col@src/main.cpp:132:  @2 [000.77% *1+=5us=17us~/3]
+
+src/main.cpp:132: trako: SCOPE: { col@src/main.cpp:132:  @2 [000.76%*0+?5*3/2226us]
+src/main.cpp:132: trako: SCOPE: } col@src/main.cpp:132:  @2 [000.99% *1+=5us=22us~/4]
+
+src/main.cpp:130: trako: SCOPE: } row@src/main.cpp:130:  @1 [002.68% *1+=30us=60us~/2]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [078.45%*0+?879*2/2241us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [084.21% *1+=817us=2575us~/3]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [083.93%*0+?858*3/3068us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [087.27% *1+=806us=3381us~/4]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [086.96%*0+?845*4/3888us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [088.99% *1+=716us=4097us~/5]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [088.85%*0+?819*5/4611us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [090.35% *1+=715us=4812us~/6]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [090.23%*0+?802*6/5333us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [091.39% *1+=715us=5527us~/7]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [091.28%*0+?789*7/6055us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [092.20% *1+=717us=6244us~/8]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [092.09%*0+?780*8/6780us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [092.85% *1+=714us=6958us~/9]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [092.75%*0+?773*9/7502us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [093.39% *1+=722us=7680us~/10]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [093.25%*0+?768*10/8236us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [093.81% *1+=745us=8425us~/11]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [093.61%*0+?765*11/9000us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [094.10% *1+=742us=9167us~/12]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [093.94%*0+?763*12/9758us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [094.36% *1+=715us=9882us~/13]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [094.28%*0+?760*13/10481us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [094.65% *1+=714us=10596us~/14]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [094.58%*0+?756*14/11203us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [094.93% *1+=761us=11357us~/15]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [094.83%*0+?757*15/11976us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [095.12% *1+=715us=12072us~/16]
+
+src/main.cpp:49: trako: FUNCT: { void MyOtherClass::mySubMethod() @1 [095.06%*0+?754*16/12699us]
+src/main.cpp:49: trako: FUNCT: } void MyOtherClass::mySubMethod() @1 [095.33% *1+=719us=12791us~/17]
+
+
+# Reports
+src/main.cpp:147: trako: STATS: <MyClass> +0=2 (<3<4 )
+src/main.cpp:147: trako: STATS: <MyOtherClass> +0=2 (<3<5 )
+
+src/main.cpp:147: trako: STATS: 100.00% <FUNCT/STATS> [+~0s~=+13441us=13441/8*?]
+src/main.cpp:147: trako: STATS: stats: sort: 8
+
+trako: FUNCT/STATS: ???.??% <int main(int, char**)> [~0s=0us*1~=13441us]
+trako: FUNCT/STATS: 000.15% <void MyOtherClass::myMethod()> [~0s=10us*2~=13441us]
+trako: FUNCT/STATS: 000.16% <col@src/main.cpp:132: > [~0s=5us*4~=13441us]
+trako: FUNCT/STATS: 000.45% <row@src/main.cpp:130: > [~0s=30us*2~=13441us]
+trako: FUNCT/STATS: 000.55% <myFunctionAfterTest@src/main.cpp:28: > [~0s=37us*2~=13441us]
+trako: FUNCT/STATS: 000.77% <void myFunction(int)> [~0s=34us*3~=13441us]
+trako: FUNCT/STATS: 094.20% <void MyOtherClass::myLongMethod()> [~0s=744us*17~=13441us]
+trako: FUNCT/STATS: 095.16% <void MyOtherClass::mySubMethod()> [~0s=752us*17~=13441us]
+
+src/main.cpp:147: trako: STATS: 100.00% <FUNCT/STATS> [+~0s~=+13441us/8]
+
 
 # Quitting
-src/main.cpp:53: scope: } main @0 [+0s 295us]
-trako.h:0: info: {
-src/trako/Context.cpp:35: quit: <MyClass> -1=0 = 0B (<3<4 )
-src/trako/Context.cpp:35: quit: <MyOtherClass> -1=0 = 0B (<2<2 )
-trako.h:0: info: }
+src/main.cpp:74: trako: FUNCT: } int main(int, char**) @0 [099.99% *1+=13509us=13509us~/1]
+
+trako: term: {
+trako: term: <MyClass> -2=0 (<3<4 )term: 
+trako: term: <MyOtherClass> -2=0 (<3<5 )term: 
+
+trako: term: 100.00% <FUNCT/STATS> [+~0s~=+13525us=13525/8*?]term: 
+trako: term: stats: sort: 8
+
+trako: FUNCT/STATS: 000.15% <void MyOtherClass::myMethod()> [~0s=10us*2~=13525us]
+trako: FUNCT/STATS: 000.16% <col@src/main.cpp:132: > [~0s=5us*4~=13525us]
+trako: FUNCT/STATS: 000.44% <row@src/main.cpp:130: > [~0s=30us*2~=13525us]
+trako: FUNCT/STATS: 000.55% <myFunctionAfterTest@src/main.cpp:28: > [~0s=37us*2~=13525us]
+trako: FUNCT/STATS: 000.76% <void myFunction(int)> [~0s=34us*3~=13525us]
+trako: FUNCT/STATS: 093.62% <void MyOtherClass::myLongMethod()> [~0s=744us*17~=13525us]
+trako: FUNCT/STATS: 094.57% <void MyOtherClass::mySubMethod()> [~0s=752us*17~=13525us]
+trako: FUNCT/STATS: 099.88% <int main(int, char**)> [~0s=13509us*1~=13525us]
+
+trako: term: 100.00% <FUNCT/STATS> [+~0s~=+13525us/8]
+
+trako: term: trako-0.2.0
+trako: term: https://purl.org/rzr/trako
+trako: term: }
