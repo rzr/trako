@@ -1,9 +1,3 @@
-trako (0.2.0-0) UNRELEASED; urgency=medium
-
-  * Release 0.2.0
-
- -- Philippe Coval <rzr@users.sf.net>  Thu, 09 Jul 2020 19:16:40 +0200
-
 trako (0.0.0-0) unstable; urgency=medium
 
   * WIP: https://purl.org/rzr

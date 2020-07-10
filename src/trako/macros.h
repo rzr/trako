@@ -7,7 +7,7 @@
 #define Macros_h_ __FILE__
 
 #define TRAKO_PACKAGE "trako"
-#define TRAKO_VERSION "0.2.0"
+#define TRAKO_VERSION "0.0.0"
 #define TRAKO_URL "https://purl.org/rzr/trako"
 
 /// msvc workaround
