@@ -49,10 +49,11 @@ std::map<char const * const, trako::Duration<> > trako::Duration<T>::mCollection
 template <typename T>
 trako::Duration<T>::Duration(char const * const prefix,
                              char const * const name,  bool verbose)
-  : mPrefix(prefix), mName(name), mCount(), mDepth(), mProfile(true), mVerbose(verbose),
+  : mPrefix(prefix), mName(name), mCount(), mAverage(), mDepth(),
+    mProfile(true), mVerbose(verbose),
     mValue(), mCumulated(), mMaximum(), mMinimum(), mRatio()
 #ifndef CONFIG_SUPPORT_API_SYS_TIME_NO
-  , mStartTime{}, mStopTime{}
+  , mStartTime(), mStopTime()
 #endif
 {
   static int init=0; // could be relocated in get to have 100% for 1st caller
@@ -97,9 +98,12 @@ void trako::Duration<T>::print(bool verbose,
               << mCumulated * 100.f / elapsed << "%";
   }
   std::cout << " <" << mName << "> [~"
+            << mCumulated / 1000000L <<"s="
+            << mCumulated << "us]"
+            << "/" << count << "~="
             << mCumulated / count / 1000000L << "s="
+            << mCumulated / count / 1000L << "ms="
             << mCumulated / count << "us"
-            << "*" << count << "~=" << elapsed << "us" << "]"
             << suffix << std::endl;
 }
 
@@ -238,12 +242,26 @@ void trako::Duration<T>::printStats(bool verbose,
   for_each(mCollection.begin(), mCollection.end(),
            [/*prefix*/](std::pair<char const * const, Duration<>> &item) {
              // item.second.print(prefix); // TODO
-             item.second.mRatio = (float) item.second.mCumulated / mElapsed;
+             item.second.mRatio = (float) item.second.mCumulated / item.second.mElapsed;
+             item.second.mAverage = (float) item.second.mCumulated / item.second.mCount;
            }
            );
 
   std::cout<<prefix
            <<"stats: sort: "<<mCollection.size() << std::endl << std::endl;
+
+  typedef std::function<bool(std::pair<char const * const, Duration<> >,
+                             std::pair<char const * const, Duration<> >)> Comparator;
+  Comparator compAverageFunctor
+    = [](std::pair<char const * const, Duration<> > before,
+         std::pair<char const * const, Duration<> > after) {
+        return (before.second.mRatio < after.second.mRatio);
+      };
+  std::set<std::pair<char const * const, Duration<> >, Comparator> sortedAverageCollectionSet
+    (mCollection.begin(), mCollection.end(), compAverageFunctor);
+  for (std::pair<char const * const, Duration<> > item : sortedAverageCollectionSet) {
+    item.second.print(verbose, "trako: FUNCT/STATS: average: ");
+  }
 
   typedef std::function<bool(std::pair<char const * const, Duration<> >,
                              std::pair<char const * const, Duration<> >)> Comparator;

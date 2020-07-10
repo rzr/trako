@@ -36,6 +36,7 @@ namespace trako {
     char const * mPrefix; ///< Id context used as map's key
     char const * mName;
     unsigned int mCount;
+    unsigned int mAverage;
     unsigned int mDepth; ///< handle Rentrants functions (TODO improve w/ counter)
     bool mProfile;
     bool mVerbose;
