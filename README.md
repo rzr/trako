@@ -157,11 +157,13 @@ Some success have been observed with following compilers:
 * g++ (Raspbian 6.3.0-18+rpi1+deb9u1) 6.3.0 20170516 @ Raspbian_9.0/armv7l
 * g++ (Debian 8.3.0-6) 8.3.0 @ debian:10/x86_64
 * g++ (Ubuntu 9.3.0-10ubuntu2) 9.3.0 @ Ubuntu_20.04/x86_64
+* clang version 10.0.0-4ubuntu1  @ Ubuntu_20.04/x86_64
 
 While those versions may need extra efforts (please submit tickets for no cxx11 support):
 
 * g++ (Debian 4.9.2-10+deb8u2) 4.9.2 @ Debian:8
 * g++ (Ubuntu 5.3.1-14ubuntu2) 5.3.1 20160413 @ Ubuntu_16.04/i586
+* clang version 11.0.3 (clang-1103.0.32.59) @ Mac Os 10.15 : [#2](https://github.com/rzr/trako/issues/2)
 
 Please report for others platforms:
 

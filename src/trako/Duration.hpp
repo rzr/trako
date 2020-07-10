@@ -236,8 +236,8 @@ void trako::Duration<T>::printStats(bool verbose,
             <<std::endl;
 
   for_each(mCollection.begin(), mCollection.end(),
-           [prefix](std::pair<char const * const, Duration<>> &item) {
-             // item.second.print(); // TODO
+           [/*prefix*/](std::pair<char const * const, Duration<>> &item) {
+             // item.second.print(prefix); // TODO
              item.second.mRatio = (float) item.second.mCumulated / mElapsed;
            }
            );

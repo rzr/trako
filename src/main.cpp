@@ -34,6 +34,9 @@ void myFunction(int arg=0)
 class MyClass
 {
 public:
+  void myMethod() {
+    EXAMPLE_TRAKO(FUNCT()); ///< trako: Will trace function's start ("{") and end ("}")
+  }
   EXAMPLE_TRAKO(CLASS(MyClass)); /// trako: meta object is injected here for monitoring instances
 };
 
@@ -80,9 +83,11 @@ int main(int argc, char* argv[])
   cout<<endl<<"# Monitoring classes instances"<<endl;
   MyClass nested;
   EXAMPLE_TRAKO(CLASS_STATS()); ///< trako: Count all instances of all classed, Expected: +1=1
+  nested.myMethod(); ///< Just use to prevent error: unused variable 
   {
     MyClass nested;
     EXAMPLE_TRAKO(CLASS_STATS()); ///< trako: Expected: +1=2
+    nested.myMethod(); ///< Just use to prevent error: unused variable 
   }
   MyOtherClass other;
   EXAMPLE_TRAKO(CLASS_STATS()); ///< trako: Expected: MyClass=1, MyOtherClass=+1
@@ -93,6 +98,7 @@ int main(int argc, char* argv[])
     {
       MyOtherClass myOther;
       EXAMPLE_TRAKO(CLASS_DIFF()); ///< trako: Only changed instances, Expected: +2
+      myOther.myMethod();
 
       MyClass* ptr = new MyClass;
       EXAMPLE_TRAKO(CLASS_DIFF()); ///< trako: Expected: +1=3
@@ -121,6 +127,7 @@ int main(int argc, char* argv[])
   {
     MyOtherClass local;
     EXAMPLE_TRAKO(CLASS_DIFF()); ///< trako:
+    local.myMethod();
   }
 
   EXAMPLE_TRAKO(CLASS_STATS()); ///< trako:

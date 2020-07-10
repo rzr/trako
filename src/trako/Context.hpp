@@ -54,12 +54,6 @@ std::list<trako::MetaClassInterface const *>& trako::Context<T>::getClassCollect
   return *pInstance;
 }
 
-template<typename T>
-std::map<char const * const, trako::Duration<> >& trako::Context<T>::getDurationCollection()
-{
-  return Duration<>::mCollection;
-}
-
 
 template<typename T>
 void trako::Context<T>::printClass(bool verbose,

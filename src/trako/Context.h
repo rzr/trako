@@ -40,7 +40,6 @@ namespace trako {
 
   public:
     std::list<MetaClassInterface const *>& getClassCollection();
-    std::map<char const * const, Duration<> >& getDurationCollection();
 
     ///@param mList : stack on tracked class
     std::list<MetaClassInterface const *> mClassCollection;

@@ -23,6 +23,7 @@ main_exe?=${main_src:.cpp=}
 target?=${main_exe}
 log?=${target}.log.txt.tmp
 
+CXXFLAGS+=-std=c++11
 CXXFLAGS+=-Isrc
 CXXFLAGS+=-Wall -Werror -Wpedantic
 
@@ -210,6 +211,9 @@ rule/docker: Dockerfile
 	docker build -t "${project}" .
 	docker run "${project}"
 
+rule/clang: distclean
+	make CXX=clang++ -k
+	make CXX=clang++ -k test
 
 rule/tools: distclean rule/tests check
 	${MAKE} rule/cmake
