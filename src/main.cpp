@@ -9,14 +9,13 @@
 
 #if defined(EXAMPLE_CONFIG_TRAKO) && EXAMPLE_CONFIG_TRAKO
 # include <trako/trako.h> ///< trako:: Find Headers (If missing clone from git)
-//# undef  TRAKO_FUNCT_VERBOSE ///trako: Redefine trako macro for different behaviour
-//# define TRAKO_FUNCT_VERBOSE() TRAKO_FUNCT_SILENT() ///< trako: disable trace (optional)
 # define EXAMPLE_TRAKO(arg)                                             \
   TRAKO(arg) ///< trako:: Wrap to TRAKO macro to avoid spreading TRACO macro into example
+//# undef  TRAKO_FUNCT ///<trako: Redefine trako macro for different behaviour (optional)
+//# define TRAKO_FUNCT() TRAKO_MACRO_FUNCT_SILENT() ///< trako: disable trace (optional)
 #else
 # define EXAMPLE_TRAKO(arg) ///< trako: If trako not included macro can remain in code
 #endif
-
 
 
 using namespace std;
