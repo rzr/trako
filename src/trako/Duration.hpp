@@ -97,14 +97,30 @@ void trako::Duration<T>::print(bool verbose,
               << std::setfill('0') << std::setw(6)
               << mCumulated * 100.f / elapsed << "%";
   }
-  std::cout << " <" << mName << "> [~"
-            << mCumulated / 1000000L <<"s="
-            << mCumulated << "us]"
-            << "/" << count << "~="
-            << mCumulated / count / 1000000L << "s="
-            << mCumulated / count / 1000L << "ms="
-            << mCumulated / count << "us"
-            << suffix << std::endl;
+  float us = mCumulated;
+  float ms = us / 1000L;
+  float s = ms / 1000L;
+
+  std::cout << " <" << mName << "> [~";
+  if (us < 1000L) {
+    std::cout << us << "us";
+  } else if (ms < 1000L) {
+    std::cout << ms << "ms";
+  } else {
+    std::cout << s << "s";
+  }
+  std::cout << "]/" << count << "~=";
+  us = mCumulated / count;
+  ms = us / 1000L;
+  s = ms / 1000L;
+  if (us < 1000L) {
+    std::cout << us << "us";
+  } else if (ms < 1000L) {
+    std::cout << ms << "ms";
+  } else {
+    std::cout << s << "s";
+  }
+std::cout << suffix << std::endl;
 }
 
 
@@ -205,7 +221,7 @@ void trako::Duration<T>::stop(bool verbose)
     std::cout<<" ["
              << std::fixed << std::setprecision(2)
              << std::setfill('0') << std::setw(6)
-             << mRatio * 100.f << "% *" << mDepth
+             << mRatio * 100.f << "%*" << mDepth
              << "+=" << mValue << "us=" << mCumulated << "us~/"
              << mCount  << "]"
       ;
