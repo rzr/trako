@@ -154,7 +154,7 @@ rule/test/flag/boolean/%:
 	${MAKE} ${@D}/1/${@F}
 	@echo "# log: success: $@"
 
-check: rule/version all
+check: rule/version distclean all
 	${MAKE} run > ${log}
 	cat ${log} | grep '^trako: init: }'
 	cat ${log} | grep ' trako: FUNCT: } int main('
