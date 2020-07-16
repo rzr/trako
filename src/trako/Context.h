@@ -24,18 +24,18 @@ namespace trako {
 
     //private:
     void print(bool verbose=true,
-               char const * const prefix=0, char const* const suffix="") {
+               char const * const prefix="", char const* const suffix="") {
       printClass(verbose, prefix, suffix);
       printFunct(verbose, prefix, suffix);
     }
 
     ///@param verbose : all class type else only changed
     void printClass(bool verbose=true,
-                    char const * const prefix=0,
+                    char const * const prefix="",
                     char const * const suffix="");
 
     void printFunct(bool verbose=true,
-                    char const * const prefix=0,
+                    char const * const prefix="",
                     char const * const suffix="");
 
   public:
